@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from '../store'
 
 Vue.use(Router)
 
-export default new Router({
+let router = new Router({
   routes: [
     {
       path: '/',
@@ -45,4 +46,14 @@ export default new Router({
       redirect: '/'
     }
   ]
-})
+});
+
+router.beforeEach((to, from, next) => {
+  if(store.getters.isAuthorized) {
+    next();
+  } else {
+    next('/login');
+  }
+});
+
+export default router;

@@ -3,37 +3,48 @@
     <h1 class="title">Login</h1>
     <div class="field">
         <label class="label">UserName</label>
-        <input v-model="username" class="input" type="text" placeholder="Input User Name">
+        <input v-model="inputUsername" class="input" type="text" placeholder="Input User Name">
     </div>
     <div class="field">
         <label class="label">Password</label>
-        <input v-model="password" class="input" type="text" placeholder="Input Password">
+        <input v-model="inputPassword" class="input" type="text" placeholder="Input Password">
     </div>
     <div class="field">
-        <button v-on:click="counter" class="button is-primary">Login</button>
+        <button v-on:click="login({username: inputUsername, password: inputPassword})" class="button is-primary">Login</button>
     </div>
-    <span>{{ username }} + {{ password }} + Clicks: {{ clicks }}</span>
-    <span>{{ sample() }}</span>
+    <span>{{ username }} + {{ email }} + {{ token }} + {{ id }} + Clicks: {{ clicks }}</span>
   </div>
 </template>
 
 <script>
-import api from '../api'
+import {mapActions} from 'vuex'
 export default {
 
   data: function() {
       return {
-        username: "",
-        password: "",
-        clicks: 0
+        clicks: 0,
+        inputPassword: '',
+        inputUsername: ''
     };
   },
+  //getters for logged in 
+  //how does this send payload?
+  //And with modules?
   methods: {
-    counter: function(event) {
-        this.clicks++;
+    ...mapActions(['login'])
+  },
+  computed: {
+    username() {
+      return this.$store.state.Users.user.username;
     },
-    sample: function() {
-      return api.sample();
+    token() {
+      return this.$store.state.Users.user.token;
+    },
+    email() {
+      return this.$store.state.Users.user.email;
+    },
+    id() {
+      return this.$store.state.Users.user.id;
     }
   }
 }

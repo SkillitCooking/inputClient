@@ -1,11 +1,7 @@
 'use strict';
 
-import Vue from 'vue'
+import users from './users';
 
-function sample() {
-    return Vue.sample;
-}
-
-export default {
-   sample
+export {
+   users
 }
