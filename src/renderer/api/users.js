@@ -12,7 +12,11 @@ async function login(username, password) {
         });
         return res.data.user;
     } catch (e) {
-        console.log(e.message);
+        console.log('error', e.message);
+        return {
+            error: e,
+            status: e.response.data.status
+        };
     }
 }
 

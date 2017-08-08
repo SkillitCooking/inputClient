@@ -2,12 +2,15 @@
 
 import mutation from '../mutation-types';
 import {users as userAPI} from '../../api';
+import router from '../../router';
 
 const state = {
     user: {
         username: 'fake name',
-        email: 'fake@demo.false',
-        token: 'fake token'
+        email: 'fake@demo.false'
+    },
+    loginError: {
+        isError: false
     }
 };
 
@@ -17,24 +20,36 @@ const mutations = {
     },
     [mutation.USER.SET_TOKEN] (state, token) {
         state.user = {...state.user, token: token};
+    },
+    [mutation.USER.SET_LOGIN_ERROR] (state, error) {
+        state.loginError = error;
     }
 };
 
 const actions = {
     async login({ commit }, user) {
         //TODO -> signal bad login -> will need response handling for that
+        commit(mutation.LOADING.START);
+        commit(mutation.USER.SET_LOGIN_ERROR, {isError: false});
         let fetchedUser = await userAPI.login(user.username, user.password);
-        commit(mutation.USER.SET, fetchedUser);
+        if(fetchedUser.hasOwnProperty('error')) {
+            commit(mutation.USER.SET_LOGIN_ERROR, {isError: true, error: fetchedUser.error});
+            setTimeout(() => {
+                commit(mutation.LOADING.STOP);
+            }, 750);
+        } else {
+            commit(mutation.USER.SET, fetchedUser);
+            setTimeout(() => {
+                commit(mutation.LOADING.STOP);
+                router.push('/');
+            }, 750);
+        }
     }
 };
 
 const getters = {
-    //have getters for token and username and email?
-    //or accessible through state?
-    //How the state attributes accessed in Componnet?
-    //=>> from within computed property
     isAuthorized: () => {
-        return state.user.token ? true : false;
+        return state.user.token && state.user.id ? true : false;
     }
 };
 

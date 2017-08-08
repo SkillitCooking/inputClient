@@ -7,17 +7,24 @@ Vue.use(Router)
 let router = new Router({
   routes: [
     {
-      path: '/',
+      path: '/landing-page',
       name: 'landing-page',
       component: require('@/components/LandingPage')
     },
     {
       path: '/login',
       name: 'login-page',
-      component: require('@/components/LoginPage')
+      component: require('@/components/LoginPage'),
+      beforeEnter: function(to, from, next) {
+        if(store.getters.isAuthorized) {
+          next('/');
+        } else {
+          next();
+        }
+      }
     },
     {
-      path: '/recipes',
+      path: '/',
       name: 'recipes-page',
       component: require('@/components/RecipesPage')
     },
@@ -49,7 +56,7 @@ let router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-  if(store.getters.isAuthorized) {
+  if(store.getters.isAuthorized || to.path === '/login') {
     next();
   } else {
     next('/login');

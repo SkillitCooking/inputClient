@@ -1,28 +1,37 @@
 <template>
   <div>
-    <h1 class="title">Login</h1>
-    <div class="field">
-        <label class="label">UserName</label>
-        <input v-model="inputUsername" class="input" type="text" placeholder="Input User Name">
+    <jumper v-if="loading"></jumper>
+    <div v-if="!loading">
+      <h1 class="title">Login</h1>
+      <div class="field">
+          <label class="label">UserName</label>
+          <input v-model="inputUsername" class="input" type="text" placeholder="Input User Name">
+      </div>
+      <div class="field">
+          <label class="label">Password</label>
+          <input v-model="inputPassword" class="input" type="text" placeholder="Input Password">
+      </div>
+      <div class="field">
+          <button v-on:click="login()" class="button is-primary">Login</button>
+      </div>
+      <p v-if="isError" class="has-text-danger">There was a login error.</p>
+      <p>{{ username }} + {{ email }} + {{ token }} + {{ id }}</p>
     </div>
-    <div class="field">
-        <label class="label">Password</label>
-        <input v-model="inputPassword" class="input" type="text" placeholder="Input Password">
-    </div>
-    <div class="field">
-        <button v-on:click="login({username: inputUsername, password: inputPassword})" class="button is-primary">Login</button>
-    </div>
-    <span>{{ username }} + {{ email }} + {{ token }} + {{ id }} + Clicks: {{ clicks }}</span>
   </div>
 </template>
 
 <script>
 import {mapActions} from 'vuex'
+import Jumper from 'vue-loading-spinner/src/components/Jumper';
+
 export default {
+
+  components: {
+    Jumper
+  },
 
   data: function() {
       return {
-        clicks: 0,
         inputPassword: '',
         inputUsername: ''
     };
@@ -31,7 +40,11 @@ export default {
   //how does this send payload?
   //And with modules?
   methods: {
-    ...mapActions(['login'])
+    login() {
+      this.$store.dispatch('login', {username: this.inputUsername, password: this.inputPassword});
+      this.inputUsername = '';
+      this.inputPassword = '';
+    }
   },
   computed: {
     username() {
@@ -45,6 +58,12 @@ export default {
     },
     id() {
       return this.$store.state.Users.user.id;
+    },
+    isError() {
+      return this.$store.state.Users.loginError.isError;
+    },
+    loading() {
+      return this.$store.state.Loading.loading;
     }
   }
 }
