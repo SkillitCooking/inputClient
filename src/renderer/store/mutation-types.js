@@ -9,5 +9,13 @@ export default Object.freeze({
     LOADING: {
         START: 'LOADING_START',
         STOP: 'LOADING_STOP'
+    },
+    TAG: {
+        ADD_TAG: 'ADD_TAG',
+        REMOVE_TAG: 'REMOVE_TAG',
+        EDIT_TAG: 'EDIT_TAG',
+        SET_API_ERROR: 'SET_TAG_API_ERR',
+        SET_TAGS: 'SET_TAGS',
+        TAGS_LOADED: 'TAGS_LOADED'
     }
 });

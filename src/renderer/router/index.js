@@ -41,7 +41,11 @@ let router = new Router({
     {
       path: '/tags',
       name: 'tags-page',
-      component: require('@/components/TagsPage')
+      component: require('@/components/TagsPage'),
+      beforeEnter: async function(to, from, next) {
+        await store.dispatch('fetchTags');
+        next();
+      }
     },
     {
       path: '/units',

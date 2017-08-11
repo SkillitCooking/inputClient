@@ -1,6 +1,7 @@
 'use strict';
 
 import axios from 'axios';
+import {handleError} from '../lib/errors';
 
 async function login(username, password) {
     try {
@@ -10,13 +11,11 @@ async function login(username, password) {
                 password
             }
         });
+        //set token
+        axios.defaults.headers.common['Authorization'] = "Bearer " + res.data.user.token;
         return res.data.user;
     } catch (e) {
-        console.log('error', e.message);
-        return {
-            error: e,
-            status: e.response.data.status
-        };
+       handleError(e);
     }
 }
 

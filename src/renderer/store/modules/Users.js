@@ -1,6 +1,7 @@
 'use strict';
 
 import mutation from '../mutation-types';
+import {TIMEOUT} from '../constants';
 import {users as userAPI} from '../../api';
 import router from '../../router';
 
@@ -36,13 +37,13 @@ const actions = {
             commit(mutation.USER.SET_LOGIN_ERROR, {isError: true, error: fetchedUser.error});
             setTimeout(() => {
                 commit(mutation.LOADING.STOP);
-            }, 750);
+            }, TIMEOUT);
         } else {
             commit(mutation.USER.SET, fetchedUser);
             setTimeout(() => {
                 commit(mutation.LOADING.STOP);
                 router.push('/');
-            }, 750);
+            }, TIMEOUT);
         }
     }
 };

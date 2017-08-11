@@ -1,6 +1,6 @@
 <template> 
   <div>
-    <h1 class="title">Tags Page</h1>
+    <h1 class="title">Tags</h1>
     <action-nav :is-edit.sync="isEdit" :is-create.sync="isCreate"></action-nav>
     <edit v-if="isEdit"></edit>
     <create v-if="isCreate"></create>
