@@ -15,15 +15,21 @@
             </div>
             <div class="field" v-if="selectedTag">
                 <label class="label">Name</label>
-                <input v-model="selectedTag.name" class="input" type="text" placeholder="Edit Tag Name">
+                <div class="control">
+                    <input v-model="selectedTag.name" class="input" type="text" placeholder="Edit Tag Name">
+                </div>
                 <div class="tags has-addons">
                     <span class="tag">ID</span>
                     <span class="tag is-dark">{{ selectedTag.id }}</span>
                 </div>
             </div>
-            <div class="field">
-                <button v-on:click="save()" class="button is-info">Save Changes</button>
-                <button v-on:click="del()" class="button is-danger">Delete Tag</button>
+            <div class="field is-grouped">
+                <div class="control">
+                    <button v-on:click="save()" class="button is-info">Save Changes</button>
+                </div>
+                <div class="control">
+                    <button v-on:click="del()" class="button is-danger">Delete Tag</button>
+                </div>
             </div>
         </div>
     </div>
@@ -66,7 +72,8 @@ export default {
                 .catch(() => {
                     this.editSuccess = false;
                     this.isError = true;
-                }).then(() => {
+                })
+                .then(() => {
                     this.selectedTag = null;
                     this.selectedTags = Array(this.$store.state.Tags.tags.length).fill(false);
                 });
@@ -100,6 +107,6 @@ export default {
 }
 </script>
 
-<style scopeds>
+<style scoped>
 
 </style>

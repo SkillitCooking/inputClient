@@ -5,17 +5,22 @@
       <h1 class="title">Login</h1>
       <div class="field">
           <label class="label">UserName</label>
-          <input v-model="inputUsername" class="input" type="text" placeholder="Input User Name">
+          <div class="control">
+            <input v-model="inputUsername" class="input" type="text" placeholder="Input User Name">
+          </div>
       </div>
       <div class="field">
           <label class="label">Password</label>
-          <input v-model="inputPassword" class="input" type="text" placeholder="Input Password">
+          <div class="control">
+            <input v-model="inputPassword" class="input" type="text" placeholder="Input Password">
+          </div>
       </div>
       <div class="field">
+        <div class="control">
           <button v-on:click="login()" class="button is-primary">Login</button>
+        </div>
       </div>
       <p v-if="isError" class="has-text-danger">There was a login error.</p>
-      <p>{{ username }} + {{ email }} + {{ token }} + {{ id }}</p>
     </div>
   </div>
 </template>

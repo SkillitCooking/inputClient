@@ -6,10 +6,14 @@
             <p v-if="isError" class="has-text-danger">There was an error</p>
             <div class="field">
                 <label class="label">Name</label>
-                <input v-model="inputName" class="input" type="text" placeholder="Input Tag's Name">
+                <div class="control">
+                    <input v-model="inputName" class="input" type="text" placeholder="Input Tag's Name">
+                </div>
             </div>
             <div class="field">
-                <button v-on:click="save()" class="button is-primary">Save</button>
+                <div class="control">
+                    <button v-on:click="save()" class="button is-primary">Save</button>
+                </div>
             </div>
             <h5 class="title is-5">Current Tags</h5>
             <div class="tags">

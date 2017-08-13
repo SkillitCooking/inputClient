@@ -50,7 +50,11 @@ let router = new Router({
     {
       path: '/units',
       name: 'units-page',
-      component: require('@/components/UnitsPage')
+      component: require('@/components/UnitsPage'),
+      beforeEnter: async function(to, from, next) {
+        await store.dispatch('fetchUnits');
+        next();
+      }
     },
     {
       path: '*',

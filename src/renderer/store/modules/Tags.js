@@ -58,9 +58,8 @@ const actions = {
             commit(mutation.LOADING.START);
             commit(mutation.TAG.SET_API_ERROR, {isError: false});
             let editedTag = await tagAPI.editTag(tag);
-            console.log('editedTag', editedTag);
             if(editedTag.hasOwnProperty('error')) {
-                commit(mutation.TAG.SET_API_ERROR, {isError: true, error: deletedTag.error});
+                commit(mutation.TAG.SET_API_ERROR, {isError: true, error: editedTag.error});
                 setTimeout(() => {
                     commit(mutation.LOADING.STOP);
                     reject();
@@ -110,7 +109,6 @@ const mutations = {
         state.tags.splice(index, 1);
     },
     [mutation.TAG.EDIT_TAG] (state, editTag) {
-        console.log('editTag', editTag);
         let index = state.tags.findIndex(tag => tag.id === editTag.id);
         state.tags.splice(index, 1, editTag);
     },
