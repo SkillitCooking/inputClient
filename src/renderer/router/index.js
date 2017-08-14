@@ -36,7 +36,11 @@ let router = new Router({
     {
       path: '/seasonings',
       name: 'seasonings-page',
-      component: require('@/components/SeasoningsPage')
+      component: require('@/components/SeasoningsPage'),
+      beforeEnter: async function(to, from, next) {
+        await store.dispatch('fetchSeasonings');
+        next();
+      }
     },
     {
       path: '/tags',

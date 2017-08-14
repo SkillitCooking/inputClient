@@ -18,7 +18,6 @@ const actions = {
             commit(mutation.LOADING.START);
             commit(mutation.UNIT.SET_API_ERROR, {isError: false});
             let fetchedUnit = await unitsAPI.saveUnit(unit);
-            console.log('fetchedUnit', fetchedUnit);
             if(fetchedUnit.hasOwnProperty('error')) {
                 commit(mutation.UNIT.SET_API_ERROR, {isError: true, error: fetchedUnit.error});
                 setTimeout(() => {

@@ -4,12 +4,6 @@
         <div v-show="!loading">
             <p v-if="editSuccess" class="has-text-success">You {{editAction}} {{editedUnit}} successfully</p>
             <p v-if="isError" class="has-text-danger">There was an error</p>
-            <!--
-                Dropdown, to select units
-                if selected, then have form fields show up to edit
-                ==>same kind of mechanism as with tags edit
-                delete + save buttons
-            -->
             <div class="field">
                 <label class="label">Select Unit</label>
                 <div class="control">
