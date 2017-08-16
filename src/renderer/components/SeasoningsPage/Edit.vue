@@ -37,7 +37,7 @@
                         </label>
                     </div>
                 </div>
-                <seasoning-select v-if="selectedSeasoning.isComposite" :seasonings="selectedSeasonings"></seasoning-select>
+                <item-select v-if="selectedSeasoning.isComposite" :items="selectedSeasonings" :can-be-optional="false"></item-select>
             </div>
             <div class="field is-grouped">
                 <div class="control">
@@ -53,12 +53,12 @@
 
 <script>
 import Circle9 from 'vue-loading-spinner/src/components/Circle9';
-import SeasoningSelect from './SeasoningSelect';
+import ItemSelect from '../lib/ItemSelect';
 
 export default {
   components: {
       Circle9,
-      SeasoningSelect
+      ItemSelect
   },
   data: function() {
       return {

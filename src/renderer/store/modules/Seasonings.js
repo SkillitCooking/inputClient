@@ -106,7 +106,6 @@ const actions = {
             commit(mutation.LOADING.START);
             commit(mutation.SEASONING.SET_API_ERROR, {isError: false});
             let fetchedSeasoning = await seasoningsAPI.saveSeasoning(seasoning);
-            console.log('savedSeasoning', seasoning);
             if(fetchedSeasoning.hasOwnProperty('error')) {
                 commit(mutation.SEASONING.SET_API_ERROR, {isError: true, error: fetchedSeasoning.error});
                 setTimeout(() => {

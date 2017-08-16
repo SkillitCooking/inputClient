@@ -19,7 +19,7 @@
                   </label>
               </div>
           </div>
-          <seasoning-select v-if="inputIsComposite" :seasonings="selectedSeasonings"></seasoning-select>
+          <item-select v-if="inputIsComposite" :items="selectedSeasonings" :can-be-optional="false"></item-select>
           <div class="field">
               <div class="control">
                   <button v-on:click="save()" class="button is-primary">Save</button>
@@ -35,7 +35,7 @@
 
 <script>
 import Circle9 from 'vue-loading-spinner/src/components/Circle9'
-import SeasoningSelect from './SeasoningSelect';
+import ItemSelect from '../lib/ItemSelect';
 
 export default {
   components: {

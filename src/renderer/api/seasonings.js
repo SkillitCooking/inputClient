@@ -40,7 +40,6 @@ async function fetchSeasonings(ids = []) {
         let res = await axios.post('/seasonings/getSeasonings', {
             ids
         });
-        console.log('fetchedSeasonings', res);
         return res.data.data;
     } catch(e) {
         handleError(e);

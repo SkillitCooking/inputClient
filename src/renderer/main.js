@@ -16,7 +16,6 @@ axios.defaults.headers.get['client-password'] = 'tTptcVawXzzbDTNygO9Mc';
 axios.defaults.headers.put['client-password'] = 'tTptcVawXzzbDTNygO9Mc';
 axios.defaults.headers.delete['client-password'] = 'tTptcVawXzzbDTNygO9Mc';
 axios.interceptors.request.use(function(config) {
-  console.log('config', config);
   return config;
 })
 

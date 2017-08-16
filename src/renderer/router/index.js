@@ -31,7 +31,15 @@ let router = new Router({
     {
       path: '/ingredients',
       name: 'ingredients-page',
-      component: require('@/components/IngredientsPage')
+      component: require('@/components/IngredientsPage'),
+      beforeEnter: async function(to, from, next) {
+        await Promise.all([
+          store.dispatch('fetchTags'),
+          store.dispatch('fetchUnits'),
+          store.dispatch('fetchIngredients')
+        ]);
+        next();
+      }
     },
     {
       path: '/seasonings',
