@@ -31,9 +31,6 @@
 <script>
 export default {
   props: ['items', 'canBeOptional'],
-  data: function() {
-      
-  },
   methods: {
       selectItem(index) {
           this.items[index].selected = !this.items[index].selected;

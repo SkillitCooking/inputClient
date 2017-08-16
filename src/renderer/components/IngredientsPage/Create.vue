@@ -62,17 +62,15 @@
                     </select>
                 </div>
             </div>
-            <div class="field">
-                <label class="label">Select Tags</label>
-                <!--Is this wrapping sufficient? Necessary?-->
-                <div class="tags">
-                    <span class="tag"
-                        v-for="(tag, index) in tags"
-                        :key="tag.id"
-                        v-on:click="selectTag(index)"
-                        v-bind:class="tagClass(index)">
-                        {{tag.name}}</span>
-                </div>
+            <label class="label">Select Tags</label>
+            <!--Is this wrapping sufficient? Necessary?-->
+            <div class="tags">
+                <span class="tag"
+                    v-for="(tag, index) in tags"
+                    :key="tag.id"
+                    v-on:click="selectTag(index)"
+                    v-bind:class="tagClass(index)">
+                    {{tag.name}}</span>
             </div>
             <div class="field">
                 <div class="control">
@@ -82,7 +80,10 @@
                     </label>
                 </div>
             </div>
-            <item-select v-if="inputIsComposite" :items="selectedIngredients" :can-be-optional="true"></item-select>
+            <div class="field" v-if="inputIsComposite">
+                <label class="label">Select Composing Ingredients</label>
+                <item-select :items="selectedIngredients" :can-be-optional="true"></item-select>
+            </div>
             <div class="field">
                 <div class="control">
                     <button v-on:click="save()" class="button is-primary">Save</button>
@@ -107,7 +108,7 @@ export default {
   },
   methods: {
       selectTag(index) {
-          this.selectedTags[index] = !this.selectedTags[index];
+          this.$set(this.selectedTags, index, !this.selectedTags[index]);
       },
       tagClass(index) {
           return this.selectedTags[index] ?
@@ -143,7 +144,7 @@ export default {
                 this.$refs["unitsSelect"].value = '';
                 this.selectedCategory = '';
                 this.$refs["categorySelect"].value = '';
-                this.selectedTags.fill(false);
+                this.selectedTags = Array.from(this.selectedTags.fill(false));
                 this.selectedIngredients = this.ingredients.map(i => ({
                     selected: false,
                     isOptional: false,

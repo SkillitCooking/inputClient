@@ -40,7 +40,7 @@ import ItemSelect from '../lib/ItemSelect';
 export default {
   components: {
       Circle9,
-      SeasoningSelect
+      ItemSelect
   },
   data: function() {
       return {

@@ -24,14 +24,14 @@
                 <div class="field">
                     <label class="label">Singular Name</label>
                     <div class="control">
-                        <input type="text" class="input" placeholder="Singular Name" v-model="selectedIngredient.singularName">
+                        <input type="text" class="input" placeholder="Singular Name" v-model="selectedIngredient.nameSingular">
                     </div>
                     <p class="help">Required</p>
                 </div>
                 <div class="field">
                     <label class="label">Plural Name</label>
                     <div class="control">
-                        <input type="text" class="input" placeholder="Plural Name" v-model="selectedIngredient.pluralName">
+                        <input type="text" class="input" placeholder="Plural Name" v-model="selectedIngredient.namePlural">
                     </div>
                     <p class="help">Required</p>
                 </div>
@@ -98,8 +98,12 @@
                         </label>
                     </div>
                 </div>
-                <item-select v-if="selectedIngredient.isComposite" :items="selectedIngredients" :can-be-optional="true"></item-select>
+                <div class="field" v-if="selectedIngredient.isComposite">
+                    <label class="label">Select Composing Ingredients</label>
+                    <item-select :items="selectedIngredients" :can-be-optional="true"></item-select>
+                </div>
             </div>
+            <br>
             <div class="field is-grouped">
                 <div class="control">
                     <button v-on:click="save()" class="button is-info">Save Changes</button>
@@ -133,7 +137,7 @@ export default {
               name: i.nameSingular,
               isOptional: false
           })),
-          selectedTags: Array(this.$store.state.Tags.tags.length).fill({original: false, current: false})
+          selectedTags: Array(this.$store.state.Tags.tags.length).fill(false)
       };
   },
   computed: {
@@ -152,7 +156,7 @@ export default {
   },
   methods: {
       selectTag(index) {
-          this.selectedTags[index].current = !this.selectedTags[index].current;
+          this.$set(this.selectedTags[index], 'current', !this.selectedTags[index].current);
       },
       tagClass(index) {
           return this.selectedTags[index].current ?
@@ -165,13 +169,16 @@ export default {
               this.selectedUnit = '';
               this.selectedCategory = '';
           } else {
+              this.selectedTags = this.selectedTags.map(t => ({current: false, original: false}));
+              console.log('selecteTag', this.selectedTags);
               this.selectedIngredient = Object.assign({}, this.selected);
-              this.selectedUnit = this.units.find(unit => unit.id === this.selectedIngredient.units);
+              this.selectedUnit = this.units.find(unit => unit.id === this.selectedIngredient.units.id);
               this.selectedIngredient.tags.forEach(t => {
+                  console.log('t', t);
                   let index = this.tags.findIndex(tag => t.id === tag.id);
                   if(t.type === 'CATEGORY') {
                       this.selectedCategory = this.tags[index];
-                      this.originalCategory = this.tags[index];
+                      this.originalCategory = t;
                   } else {
                       this.selectedTags[index].current = true;
                       this.selectedTags[index].original = true;
@@ -179,8 +186,10 @@ export default {
               });
               console.log('selectedIngredient', this.selectedIngredient);
               this.selectedIngredients.forEach(i => {
-                  if(this.selectedIngredient.childIngredients.some(ci => ci.id === i.id)){
+                  let child = this.selectedIngredient.childIngredients.find(ci => ci.id === i.id);
+                  if(child){
                       i.selected = true;
+                      i.isOptional = child.isOptional;
                   } else {
                       i.selected = false;
                   }
@@ -192,8 +201,8 @@ export default {
           let tagsToRemove = [];
           let ingredient = {
               id: this.selectedIngredient.id,
-              singularName: this.selectedIngredient.singularName,
-              pluralName: this.selectedIngredient.pluralName,
+              nameSingular: this.selectedIngredient.nameSingular,
+              namePlural: this.selectedIngredient.namePlural,
               description: this.selectedIngredient.description,
               servingSize: this.selectedIngredient.servingSize,
               isComposite: this.selectedIngredient.isComposite,
@@ -203,6 +212,7 @@ export default {
           };
           if(this.selectedCategory.id !== this.originalCategory.id) {
               ingredient.category = this.selectedCategory.id;
+              tagsToRemove.push(this.originalCategory.ingTagId);
           }
           this.selectedTags.forEach((t, index) => {
               if(t.original && !t.current) {
@@ -212,16 +222,16 @@ export default {
               }
               if(!t.original && t.current) {
                   //adds
-                  ingredients.tags.push(this.tags[index].id);
+                  ingredient.tags.push(this.tags[index].id);
               }
           });
           if(ingredient.isComposite) {
               this.selectedIngredients.forEach((i, index) => {
                   let selectedChild = this.selectedIngredient.childIngredients.find(ci => ci.id === i.id);
-                  if(s.selected && !selectedChild) {
+                  if(i.selected && !selectedChild) {
                       ingredient.composingIngredients.push([i.id, i.isOptional]);
                   }
-                  if(!s.selected && selectedChild) {
+                  if(!i.selected && selectedChild) {
                       composingToRemove.push(selectedChild.compIngId);
                   }
               });
