@@ -4,6 +4,8 @@ osx_image: xcode8.3
 sudo: required
 dist: trusty
 language: c
+env:
+- GH_TOKEN=7a4d0e9a199f36948d9e9f92272c47efed5451dc
 matrix:
   include:
   - os: osx
