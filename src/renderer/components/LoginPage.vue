@@ -46,9 +46,15 @@ export default {
   //And with modules?
   methods: {
     login() {
-      this.$store.dispatch('login', {username: this.inputUsername, password: this.inputPassword});
-      this.inputUsername = '';
-      this.inputPassword = '';
+      this.$store.dispatch('login', {username: this.inputUsername, password: this.inputPassword})
+        .then(() => {
+          this.inputUsername = '';
+          this.inputPassword = '';
+          this.$router.push('/');
+        }).catch(() => {
+          this.inputUsername = '';
+          this.inputPassword = '';
+        });
     }
   },
   computed: {

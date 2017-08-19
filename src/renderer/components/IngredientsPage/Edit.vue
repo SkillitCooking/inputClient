@@ -6,7 +6,7 @@
             <p v-if="isError" class="has-text-danger">There was an error</p>
             <div class="field">
                 <label class="label">Select Ingredient</label>
-                <div class="control">
+                <div class="select">
                     <select
                         ref="ingredientsSelect"
                         v-on:change="selectIngredient"
@@ -24,16 +24,16 @@
                 <div class="field">
                     <label class="label">Singular Name</label>
                     <div class="control">
-                        <input type="text" class="input" placeholder="Singular Name" v-model="selectedIngredient.nameSingular">
+                        <input type="text" v-validate="'required'" name="singular" class="input" placeholder="Singular Name" v-model="selectedIngredient.nameSingular">
                     </div>
-                    <p class="help">Required</p>
+                    <p v-show="errors.has('singular')" class="help is-danger">Required</p>
                 </div>
                 <div class="field">
                     <label class="label">Plural Name</label>
                     <div class="control">
-                        <input type="text" class="input" placeholder="Plural Name" v-model="selectedIngredient.namePlural">
+                        <input type="text" class="input" name="plural" v-validate="'required'" placeholder="Plural Name" v-model="selectedIngredient.namePlural">
                     </div>
-                    <p class="help">Required</p>
+                    <p v-show="errors.has('plural')" class="help is-danger">Required</p>
                 </div>
                 <div class="field">
                     <label class="label">Description</label>
@@ -45,9 +45,9 @@
                 <div class="field">
                     <label class="label">Serving Size</label>
                     <div class="control">
-                        <input v-model="selectedIngredient.servingSize" class="input" type="text" placeholder="Input Serving Size">
+                        <input v-model="selectedIngredient.servingSize" v-validate="'required|numeric'" class="input" type="text" name="serving-size" placeholder="Input Serving Size">
                     </div>
-                    <p class="help">Default is 1</p>
+                    <p v-show="errors.has('serving-size')" class="help">Required and must be a number</p>
                 </div>
                 <div class="field">
                     <label class="label">Select Units</label>
@@ -170,11 +170,9 @@ export default {
               this.selectedCategory = '';
           } else {
               this.selectedTags = this.selectedTags.map(t => ({current: false, original: false}));
-              console.log('selecteTag', this.selectedTags);
               this.selectedIngredient = Object.assign({}, this.selected);
               this.selectedUnit = this.units.find(unit => unit.id === this.selectedIngredient.units.id);
               this.selectedIngredient.tags.forEach(t => {
-                  console.log('t', t);
                   let index = this.tags.findIndex(tag => t.id === tag.id);
                   if(t.type === 'CATEGORY') {
                       this.selectedCategory = this.tags[index];
@@ -184,7 +182,6 @@ export default {
                       this.selectedTags[index].original = true;
                   }
               });
-              console.log('selectedIngredient', this.selectedIngredient);
               this.selectedIngredients.forEach(i => {
                   let child = this.selectedIngredient.childIngredients.find(ci => ci.id === i.id);
                   if(child){
@@ -199,6 +196,7 @@ export default {
       save() {
           let composingToRemove = [];
           let tagsToRemove = [];
+          let composingToEdit = [];
           let ingredient = {
               id: this.selectedIngredient.id,
               nameSingular: this.selectedIngredient.nameSingular,
@@ -234,6 +232,14 @@ export default {
                   if(!i.selected && selectedChild) {
                       composingToRemove.push(selectedChild.compIngId);
                   }
+                  if(i.selected && selectedChild) {
+                      if(i.isOptional !== selectedChild.isOptional) {
+                          composingToEdit.push({
+                              id: selectedChild.compIngId,
+                              isOptional: i.isOptional
+                          })
+                      }
+                  }
               });
           } else {
               this.selectedIngredient.childIngredients.forEach(ci => {
@@ -243,7 +249,8 @@ export default {
           this.$store.dispatch('editIngredient', {
               ingredient,
               tagsToRemove,
-              composingToRemove
+              composingToRemove,
+              composingToEdit
           }).then((editedIngredient) => {
               this.editSuccess = true;
               this.isError = false;

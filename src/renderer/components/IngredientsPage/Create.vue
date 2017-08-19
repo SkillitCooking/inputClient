@@ -7,16 +7,16 @@
             <div class="field">
                 <label class="label">Singular Name</label>
                 <div class="control">
-                    <input v-model="inputNameSingular" class="input" type="text" placeholder="Input Singular Name">
+                    <input v-validate="'required'" v-model="inputNameSingular" name="singular" class="input" type="text" placeholder="Input Singular Name">
                 </div>
-                <p class="help">Required</p>
+                <p v-show="errors.has('singular')" class="help is-danger">This is Required</p>
             </div>
             <div class="field">
                 <label class="label">Plural Name</label>
                 <div class="control">
-                    <input v-model="inputNamePlural" class="input" type="text" placeholder="Input Plural Name">
+                    <input v-validate="'required'" v-model="inputNamePlural" name="plural" class="input" type="text" placeholder="Input Plural Name">
                 </div>
-                <p class="help">Required</p>
+                <p v-show="errors.has('plural')" class="help is-danger">This is Required</p>
             </div>
             <div class="field">
                 <label class="label">Description</label>
@@ -28,9 +28,10 @@
             <div class="field">
                 <label class="label">Serving Size</label>
                 <div class="control">
-                    <input v-model="inputServingSize" placeholder="Input Serving Size" class="input" type="text">
+                    <input v-model="inputServingSize" v-validate="'required|numeric'" placeholder="Input Serving Size" name="serving-size" class="input" type="text">
                 </div>
-                <p class="help">Input a Number. Default is 1 if invalid input put in</p>
+                <p v-show="!errors.has('serving-size')" class="help">In terms of Units</p>
+                <p v-show="errors.has('serving-size')" class="help is-danger">Required, and must be a number</p>
             </div>
             <div class="field">
                 <label class="label">Select Units</label>
@@ -156,7 +157,7 @@ export default {
                 this.saveSuccess = false;
                 this.isError = true;
                 this.savedIngredient = null;
-            })
+            });
       }
   },
   data: function() {

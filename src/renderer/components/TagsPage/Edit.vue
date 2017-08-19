@@ -16,7 +16,8 @@
             <div class="field" v-if="selectedTag">
                 <label class="label">Name</label>
                 <div class="control">
-                    <input v-model="selectedTag.name" class="input" type="text" placeholder="Edit Tag Name">
+                    <input v-validate="'required'" name="name" v-model="selectedTag.name" class="input" type="text" placeholder="Edit Tag Name">
+                    <p v-show="errors.has('name')" class="help is-danger">Required</p>
                 </div>
                 <div class="tags has-addons">
                     <span class="tag">ID</span>

@@ -23,11 +23,12 @@ async function deleteIngredient(ingredientId) {
     }
 }
 
-async function editIngredient(ingredient, composingToRemove, tagsToRemove) {
+async function editIngredient(ingredient, composingToRemove, composingToEdit, tagsToRemove) {
     try {
         let res = await axios.put('/ingredients/' + ingredient.id, {
             ingredient,
             composingToRemove,
+            composingToEdit,
             tagsToRemove
         });
         return res.data.data;
@@ -41,7 +42,6 @@ async function fetchIngredients(ids = []) {
         let res = await axios.post('/ingredients/getIngredients', {
             ids
         });
-        console.log('fetched Ingredients', res);
         return res.data.data;
     } catch(e) {
         handleError(e);

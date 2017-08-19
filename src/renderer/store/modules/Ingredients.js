@@ -61,7 +61,7 @@ const actions = {
             commit(mutation.LOADING.START);
             commit(mutation.INGREDIENT.SET_API_ERROR, {isError: false});
             //can I use object destructuring here?
-            let editedIngredient = await ingredientsAPI.editIngredient(payload.ingredient, payload.composingToRemove, payload.tagsToRemove);
+            let editedIngredient = await ingredientsAPI.editIngredient(payload.ingredient, payload.composingToRemove, payload.composingToEdit, payload.tagsToRemove);
             if(editedIngredient.hasOwnProperty('error')) {
                 commit(mutation.INGREDIENT.SET_API_ERROR, {isError: true, error: editedIngredient.error});
                 setTimeout(() => {
@@ -98,6 +98,7 @@ const actions = {
                     }, TIMEOUT);
                 }
             } else {
+                commit(mutation.LOADING.STOP);
                 resolve();
             }
         })
@@ -107,7 +108,6 @@ const actions = {
             commit(mutation.LOADING.START);
             commit(mutation.INGREDIENT.SET_API_ERROR, {isError: false});
             let fetchedIngredient = await ingredientsAPI.saveIngredient(ingredient);
-            console.log('savedIngredient', fetchedIngredient);
             if(fetchedIngredient.hasOwnProperty('error')) {
                 commit(mutation.INGREDIENT.SET_API_ERROR, {isError: true, error: fetchedIngredient.error});
                 setTimeout(() => {

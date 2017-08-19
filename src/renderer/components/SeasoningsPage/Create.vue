@@ -7,9 +7,9 @@
           <div class="field">
               <label class="label">Name</label>
               <div class="control">
-                  <input v-model="inputName" class="input" type="text" placeholder="Input Name">
+                  <input v-model="inputName" v-validate="'required'" name="name" class="input" type="text" placeholder="Input Name">
               </div>
-              <p class="help">Required</p>
+              <p v-show="errors.has('name')" class="help is-danger">Required</p>
           </div>
           <div class="field">
               <div class="control">

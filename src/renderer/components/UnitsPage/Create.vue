@@ -7,16 +7,16 @@
           <div class="field">
               <label class="label">Singular Name</label>
               <div class="control">
-                <input v-model="inputNameSingular" class="input" type="text" placeholder="Input Singular Name">
+                <input v-validate="'required'" name="singular" v-model="inputNameSingular" class="input" type="text" placeholder="Input Singular Name">
               </div>
-              <p class="help">Required</p>
+              <p v-show="errors.has('singular')" class="help is-danger">Required</p>
           </div>
           <div class="field">
               <label class="label">Plural Name</label>
               <div class="control">
-                <input v-model="inputNamePlural" class="input" type="text" placeholder="Input Plural Name">
+                <input v-validate="'required'" name="plural" v-model="inputNamePlural" class="input" type="text" placeholder="Input Plural Name">
               </div>
-              <p class="help">Required</p>
+              <p v-show="errors.has('plural')" class="help is-danger">Required</p>
           </div>
           <div class="field">
               <label class="label">Abbreviation</label>

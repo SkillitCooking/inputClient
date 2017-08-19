@@ -26,9 +26,9 @@
                 <div class="field">
                     <label class="label">Name</label>
                     <div class="control">
-                        <input type="text" class="input" placeholder="Seasoning Name" v-model="selectedSeasoning.name">
+                        <input v-validate="'required'" name="name" type="text" class="input" placeholder="Seasoning Name" v-model="selectedSeasoning.name">
                     </div>
-                    <p class="help">Required</p>
+                    <p v-show="errors.has('name')" class="help is-danger">Required</p>
                 </div>
                 <div class="field">
                     <div class="control">

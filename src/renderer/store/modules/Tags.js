@@ -94,6 +94,7 @@ const actions = {
                     }, TIMEOUT)
                 }
             } else {
+                commit(mutation.LOADING.STOP);
                 resolve();
             }
         });

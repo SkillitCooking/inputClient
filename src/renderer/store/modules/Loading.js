@@ -1,5 +1,9 @@
 'use strict';
 
+/**
+ * How to make Loading behavior aggregate of calls total calls made?
+ */
+
 import mutation from '../mutation-types';
 
 const state = {

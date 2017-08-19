@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import VeeValidate from 'vee-validate'
 import axios from 'axios'
 
 import App from './App'
@@ -21,6 +22,7 @@ axios.interceptors.request.use(function(config) {
 
 Vue.http = Vue.prototype.$http = axios
 Vue.config.productionTip = false
+Vue.use(VeeValidate)
 
 /* eslint-disable no-new */
 new Vue({

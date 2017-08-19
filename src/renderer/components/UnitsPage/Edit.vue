@@ -26,16 +26,16 @@
                 <div class="field">
                     <label class="label">Singular Name</label>
                     <div class="control">
-                        <input v-model="selectedUnit.nameSingular" class="input" type="text" placeholder="Edit Singular Name">
+                        <input v-validate="'required'" name="singular" v-model="selectedUnit.nameSingular" class="input" type="text" placeholder="Edit Singular Name">
                     </div>
-                    <p class="help">Required</p>
+                    <p v-show="errors.has('singular')" class="help is-danger">Required</p>
                 </div>
                 <div class="field">
                     <label class="label">Plural Name</label>
                     <div class="control">
-                        <input v-model="selectedUnit.namePlural" class="input" type="text" placeholder="Edit Plural Name">
+                        <input v-validate="'required'" name="plural" v-model="selectedUnit.namePlural" class="input" type="text" placeholder="Edit Plural Name">
                     </div>
-                    <p class="help">Required</p>
+                    <p v-show="errors.has('plural')" class="help is-danger">Required</p>
                 </div>
                 <div class="field">
                     <div class="field">

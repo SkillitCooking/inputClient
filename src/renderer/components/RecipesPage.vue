@@ -1,50 +1,43 @@
 <template>
     <div>
-        <jumper v-if="loading"></jumper>
-        <div v-if="!loading">
-            <h1 class="title">Recipes Page</h1>
-            <action-nav v-bind:path="$route.path"></action-nav>
-            <span>{{ username }} + {{ email }} + {{ token }} + {{ id }}</span>
-        </div>
+        <h1 class="title">Recipes</h1>
+        <action-nav :is-edit.sync="isEdit" :is-create.sync="isCreate"></action-nav>
+        <edit v-if="isEdit"></edit>
+        <create v-if="isCreate"></create>
     </div>
 </template>
 
 <script>
 import ActionNav from './lib/ActionNav.vue'
-import Jumper from 'vue-loading-spinner/src/components/Jumper';
+import Create from './RecipesPage/Create';
+import Edit from './RecipesPage/Edit';
 import store from '../store';
 import mutation from '../store/mutation-types';
 
 export default {
   components: {
       ActionNav,
-      Jumper
+      Create,
+      Edit
   },
-  computed: {
-    username() {
-      return this.$store.state.Users.user.username;
-    },
-    token() {
-      return this.$store.state.Users.user.token;
-    },
-    email() {
-      return this.$store.state.Users.user.email;
-    },
-    id() {
-      return this.$store.state.Users.user.id;
-    },
-    loading()  {
-        return this.$store.state.Loading.loading;
-    } 
+  data: function() {
+    return {
+      isEdit: false,
+      isCreate: true
+    }
   },
   beforeRouteEnter(to, from, next) {
-      if(!store.state.Loading.loading) {
-        store.commit(mutation.LOADING.START);
-      }
-      setTimeout(() => {
-        store.commit(mutation.LOADING.STOP);
-        next();
-      }, 1000)
+    if(from.name === 'login-page') {
+        if(!store.state.Loading.loading) {
+          store.commit(mutation.LOADING.START);
+        }
+        setTimeout(() => {
+          next();
+          store.commit(mutation.LOADING.STOP);
+        }, 300);
+    } else {
+      next();
+    }
   }
 }
 </script>

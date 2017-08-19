@@ -2,6 +2,12 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import store from '../store'
 
+/**
+ * TODO - for Promise.all before enter fetches, could have kind of encapsulating LOADING,
+ * and pass to fetch dispatches parameter that indicates to not individually manipulate loading
+ * mutations from there
+ */
+
 Vue.use(Router)
 
 let router = new Router({
@@ -26,7 +32,16 @@ let router = new Router({
     {
       path: '/',
       name: 'recipes-page',
-      component: require('@/components/RecipesPage')
+      component: require('@/components/RecipesPage'),
+      beforeEnter: async function(to, from, next) {
+        await Promise.all([
+          store.dispatch('fetchTags'),
+          store.dispatch('fetchSeasonings'),
+          store.dispatch('fetchIngredients'),
+          store.dispatch('fetchRecipes')
+        ]);
+        next();
+      }
     },
     {
       path: '/ingredients',

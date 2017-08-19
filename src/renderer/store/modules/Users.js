@@ -3,7 +3,6 @@
 import mutation from '../mutation-types';
 import {TIMEOUT} from '../constants';
 import {users as userAPI} from '../../api';
-import router from '../../router';
 
 const state = {
     user: {
@@ -29,22 +28,24 @@ const mutations = {
 
 const actions = {
     async login({ commit }, user) {
-        //TODO -> signal bad login -> will need response handling for that
-        commit(mutation.LOADING.START);
-        commit(mutation.USER.SET_LOGIN_ERROR, {isError: false});
-        let fetchedUser = await userAPI.login(user.username, user.password);
-        if(fetchedUser.hasOwnProperty('error')) {
-            commit(mutation.USER.SET_LOGIN_ERROR, {isError: true, error: fetchedUser.error});
-            setTimeout(() => {
-                commit(mutation.LOADING.STOP);
-            }, TIMEOUT);
-        } else {
-            commit(mutation.USER.SET, fetchedUser);
-            setTimeout(() => {
-                commit(mutation.LOADING.STOP);
-                router.push('/');
-            }, TIMEOUT);
-        }
+        return new Promise(async (resolve, reject) => {
+            //TODO -> signal bad login -> will need response handling for that
+            commit(mutation.LOADING.START);
+            commit(mutation.USER.SET_LOGIN_ERROR, {isError: false});
+            let fetchedUser = await userAPI.login(user.username, user.password);
+            if(fetchedUser.hasOwnProperty('error')) {
+                commit(mutation.USER.SET_LOGIN_ERROR, {isError: true, error: fetchedUser.error});
+                setTimeout(() => {
+                    commit(mutation.LOADING.STOP);
+                    reject();
+                }, TIMEOUT);
+            } else {
+                commit(mutation.USER.SET, fetchedUser);
+                setTimeout(() => {
+                    resolve();
+                }, TIMEOUT);
+            }
+        });
     }
 };
 
