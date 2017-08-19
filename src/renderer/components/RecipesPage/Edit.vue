@@ -3,7 +3,7 @@
         <jawn v-if="loading"></jawn>
         <div v-if="!loading">
             <p v-if="editSuccess" class="has-text-success">You {{editAction}} {{editedRecipe}} successfully!</p>
-            <p v-if="isError" class="has-text-danger">There was an error</p>
+            <p v-if="isError" class="has-text-danger">There was an Error</p>
             <div class="field">
                 <div class="select">
                     <select
