@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, Menu } from 'electron'
 
 /**
  * Set `__static` path to static files in production
@@ -29,6 +29,26 @@ function createWindow () {
     mainWindow = null
   })
 }
+
+const template = [
+  {
+    label: 'Edit',
+    submenu: [
+      {role: 'undo'},
+      {role: 'redo'},
+      {type: 'separator'},
+      {role: 'cut'},
+      {role: 'copy'},
+      {role: 'paste'},
+      {role: 'pasteandmatchstyle'},
+      {role: 'delete'},
+      {role: 'selectall'}
+    ]
+  }
+];
+
+const menu = Menu.buildFromTemplate(template);
+Menu.setApplicationMenu(menu);
 
 app.on('ready', createWindow)
 
