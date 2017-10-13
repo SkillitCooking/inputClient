@@ -23,7 +23,6 @@ async function login(username, password) {
 async function fetchUsers() {
     try {
         let res = await axios.get('/users');
-        console.log('res', res);
         return res.data.users;
     } catch (e) {
         handleError(e);
@@ -43,7 +42,6 @@ async function saveUser(user) {
 
 async function editUser(user) {
     try {
-        console.log('preedit', user);
         let res = await axios.put('/users/' + user.id, {
             user
         });

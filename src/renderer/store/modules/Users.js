@@ -131,6 +131,10 @@ const actions = {
                 }, TIMEOUT);
             } else {
                 commit(mutation.USER.EDIT_USER, editedUser);
+                setTimeout(() => {
+                    commit(mutation.LOADING.STOP);
+                    resolve(editedUser.username);
+                }, TIMEOUT);
             }
         })
     },

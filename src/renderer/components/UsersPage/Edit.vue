@@ -75,7 +75,7 @@
                     </select>
                 </div>
             </div>
-            <div class="field is-horizontal">
+            <div v-if="selectedUser.address" class="field is-horizontal">
               <div class="field-label is-normal">
                   <label class="label">Address</label>
               </div>
@@ -94,7 +94,7 @@
                   </div>
               </div>
             </div>
-            <div class="field is-horizontal">
+            <div v-if="selectedUser.address" class="field is-horizontal">
               <div class="field-label"></div>
               <div class="field-body">
                   <div class="field">
@@ -128,7 +128,7 @@
                   </div>
               </div>
             </div>
-            <div class="field is-horizontal">
+            <div v-if="selectedUser.deliveryPreferences" class="field is-horizontal">
               <div class="field-label is-normal">Delivery Preferences</div>
               <div class="field-body">
                   <div class="field">
@@ -167,7 +167,7 @@
                     <button v-on:click="save()" class="button is-info">Save Changes</button>
                 </div>
                 <div class="control">
-                    <button v-on:click="del()" class="button is-danger">Delete Ingredient</button>
+                    <button v-on:click="del()" class="button is-danger">Delete User</button>
                 </div>
             </div>
           </div>
@@ -215,6 +215,7 @@ export default {
             if(this.newPassword) {
                 this.selectedUser.password = this.newPassword;
             }
+            delete this.selectedUser.deliveryPreferences.user;
             this.$store.dispatch('editUser', this.selectedUser)
                 .then((editedUser) => {
                     this.editSuccess = true;
