@@ -4,7 +4,13 @@ export default Object.freeze({
     USER: {
         SET: 'SET_USER',
         SET_TOKEN: 'SET_TOKEN',
-        SET_LOGIN_ERROR: 'SET_LOGIN_ERROR'
+        SET_LOGIN_ERROR: 'SET_LOGIN_ERROR',
+        SET_API_ERROR: 'SET_API_ERROR',
+        USERS_LOADED: 'USERS_LOADED',
+        SET_USERS: 'SET_USERS',
+        ADD_USER: 'ADD_USER',
+        EDIT_USER: 'EDIT_USER',
+        REMOVE_USER: 'REMOVE_USER'
     },
     LOADING: {
         START: 'LOADING_START',

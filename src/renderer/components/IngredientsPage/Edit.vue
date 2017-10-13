@@ -45,9 +45,16 @@
                 <div class="field">
                     <label class="label">Serving Size</label>
                     <div class="control">
-                        <input v-model="selectedIngredient.servingSize" v-validate="'required|numeric'" class="input" type="text" name="serving-size" placeholder="Input Serving Size">
+                        <input v-model="selectedIngredient.servingSize" v-validate="'required|decimal'" class="input" type="text" name="serving-size" placeholder="Input Serving Size">
                     </div>
-                    <p v-show="errors.has('serving-size')" class="help">Required and must be a number</p>
+                    <p v-show="errors.has('serving-size')" class="help">Required and must be a decimal number</p>
+                </div>
+                <div class="field">
+                    <label class="label">Total Size</label>
+                    <div class="control">
+                        <input v-model="selectedIngredient.totalSize" v-validate="'required|numeric'" class="input" type="text" name="total-size" placeholder="Input Total Size">
+                    </div>
+                    <p v-show="errors.has('total-size')" class="help">Required and must be a decimal number</p>
                 </div>
                 <div class="field">
                     <label class="label">Select Units</label>
@@ -63,6 +70,13 @@
                             </option>
                         </select>
                     </div>
+                </div>
+                <div class="field">
+                    <label class="label">Unit Price</label>
+                    <div class="control">
+                        <input v-model="selectedIngredient.estUnitPrice" v-validate="'required|numeric'" class="input" type="text" name="unit-price" placeholder="Input Unit Price">
+                    </div>
+                    <p v-show="errors.has('unit-price')" class="help">Required and must be a decimal number</p>
                 </div>
                 <div class="field">
                     <label class="label">Select Category</label>
@@ -203,6 +217,8 @@ export default {
               namePlural: this.selectedIngredient.namePlural,
               description: this.selectedIngredient.description,
               servingSize: this.selectedIngredient.servingSize,
+              totalSize: this.selectedIngredient.totalSize,
+              estUnitPrice: this.selectedIngredient.estUnitPrice,
               isComposite: this.selectedIngredient.isComposite,
               units: this.selectedUnit.id,
               tags: [],

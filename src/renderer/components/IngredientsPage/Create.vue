@@ -28,10 +28,18 @@
             <div class="field">
                 <label class="label">Serving Size</label>
                 <div class="control">
-                    <input v-model="inputServingSize" v-validate="'required|numeric'" placeholder="Input Serving Size" name="serving-size" class="input" type="text">
+                    <input v-model="inputServingSize" v-validate="'required|decimal'" placeholder="Input Serving Size" name="serving-size" class="input" type="text">
                 </div>
                 <p v-show="!errors.has('serving-size')" class="help">In terms of Units</p>
-                <p v-show="errors.has('serving-size')" class="help is-danger">Required, and must be a number</p>
+                <p v-show="errors.has('serving-size')" class="help is-danger">Required, and must be a decimal number</p>
+            </div>
+            <div class="field">
+                <label class="label">Total Size</label>
+                <div class="control">
+                    <input v-model="inputTotalSize" v-validate="'required|decimal'" placeholder="Input Total Size" name="total-size" class="input" type="text">
+                </div>
+                <p v-show="!errors.has('total-size')" class="help">In terms of Units</p>
+                <p v-show="errors.has('total-size')" class="help is-danger">Required, and must be a decimal number</p>
             </div>
             <div class="field">
                 <label class="label">Select Units</label>
@@ -47,6 +55,13 @@
                         </option>
                     </select>
                 </div>
+            </div>
+            <div class="field">
+                <label class="label">Unit Price</label>
+                <div class="control">
+                    <input v-model="inputUnitPrice" v-validate="'required|decimal'" placeholder="Input Unit Price" name="unit-price" class="input" type="text">
+                </div>
+                <p v-show="errors.has('unit-price')" class="help is-danger">Required, and must be a decimal</p>
             </div>
             <div class="field">
                 <label class="label">Select Category</label>
@@ -122,6 +137,8 @@ export default {
               namePlural: this.inputNamePlural,
               description: this.inputDescription,
               servingSize: this.inputServingSize,
+              totalSize: this.inputTotalSize,
+              estUnitPrice: this.inputUnitPrice,
               isComposite: this.inputIsComposite,
               units: this.selectedUnit.id,
               category: this.selectedCategory.id,
@@ -140,6 +157,8 @@ export default {
                 this.inputNamePlural = '';
                 this.inputDescription = '';
                 this.inputServingSize = 1;
+                this.inputTotalSize = 1;
+                this.inputUnitPrice = 0;
                 this.inputIsComposite = false;
                 this.selectedUnit = '';
                 this.$refs["unitsSelect"].value = '';
@@ -168,6 +187,8 @@ export default {
         inputNamePlural: '',
         inputDescription: '',
         inputServingSize: 1,
+        inputTotalSize: 1,
+        inputUnitPrice: 0,
         inputIsComposite: false,
         selectedUnit: '',
         selectedCategory: '',

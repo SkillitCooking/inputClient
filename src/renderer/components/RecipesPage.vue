@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import ActionNav from './lib/ActionNav.vue'
+import ActionNav from './lib/ActionNav.vue';
 import Create from './RecipesPage/Create';
 import Edit from './RecipesPage/Edit';
 import store from '../store';

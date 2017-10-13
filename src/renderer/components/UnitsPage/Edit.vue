@@ -98,7 +98,7 @@ export default {
                 this.selectedUnit = null;
                 this.selected = '';
                 this.$refs["unitsSelect"].value = '';
-            })
+            });
     },
     del() {
         this.$store.dispatch('deleteUnit', this.selectedUnit.id)
@@ -116,7 +116,7 @@ export default {
                 this.selected = '';
                 this.selectedUnit = null;
                 this.$refs["unitsSelect"].value = '';
-            })
+            });
     }
   },
   computed: {

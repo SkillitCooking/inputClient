@@ -44,8 +44,7 @@ async function fetchRecipes(ids = []) {
     try {
         let res = await axios.post('recipes/getRecipes', {
             ids
-        });
-        console.log('fetchedRecipes', res);
+        });        
         return res.data.data;
     } catch (e) {
         handleError(e);

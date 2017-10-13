@@ -84,6 +84,15 @@ let router = new Router({
       }
     },
     {
+      path: '/users',
+      name: 'users-page',
+      component: require('@/components/UsersPage'),
+      beforeEnter: async function(to, from, next) {
+        await store.dispatch('fetchUsers');
+        next();
+      }
+    },
+    {
       path: '*',
       redirect: '/'
     }

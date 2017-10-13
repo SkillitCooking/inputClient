@@ -42,6 +42,20 @@
                     <p v-show="errors.has('main-image')" class="help is-danger">Required and must be a valid URL</p>
                 </div>
                 <div class="field">
+                    <label class="label">Total Time</label>
+                    <div class="control">
+                        <input type="text" v-validate="'required|numeric'" name="total-time" class="input" placeholder="Input Total Time (minutes)" v-model="selectedRecipe.totalTime">
+                    </div>
+                    <p v-show="errors.has('total-time')" class="help is-danger">Required and must be a number</p>
+                </div>
+                <div class="field">
+                    <label class="label">Active Time</label>
+                    <div class="control">
+                        <input type="text" v-validate="'required|numeric'" name="active-time" class="input" placeholder="Input Active Time (minutes)" v-model="selectedRecipe.activeTime">
+                    </div>
+                    <p v-show="errors.has('active-time')" class="help is-danger">Required and must be a number</p>
+                </div>
+                <div class="field">
                     <label class="label">Select Ingredients</label>
                     <!--how to ensure initial congruence between selection and list?-->
                     <ingredient-selection :selected-ingredients="selectedIngredients" :recipe-ingredients="selectedRecipe.ingredients"></ingredient-selection>
@@ -159,6 +173,8 @@ export default {
                 title: this.selectedRecipe.title,
                 description: this.selectedRecipe.description,
                 mainImageUrl: this.selectedRecipe.mainImageUrl,
+                activeTime: this.selectedRecipe.activeTime,
+                totalTime: this.selectedRecipe.totalTime,
                 seasonings: [],
                 tags: [],
                 ingredients: [],

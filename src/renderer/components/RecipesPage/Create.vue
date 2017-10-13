@@ -26,6 +26,20 @@
                 <p v-show="errors.has('main-image')" class="help is-danger">Required and must be a url</p>
             </div>
             <div class="field">
+                <label class="label">Total Time</label>
+                <div class="control">
+                    <input type="text" v-validate="'required|numeric'" name="total-time" class="input" placeholder="Input Total Time (minutes)" v-model="inputTotalTime">
+                </div>
+                <p v-show="errors.has('total-time')" class="help is-danger">Required and must be a number</p>
+            </div>
+            <div class="field">
+                <label class="label">Active Time</label>
+                <div class="control">
+                    <input type="text" v-validate="'required|numeric'" name="active-time" class="input" placeholder="Input Active Time (minutes)" v-model="inputActiveTime">
+                </div>
+                <p v-show="errors.has('active-time')" class="help is-danger">Required and must be a number</p>
+            </div>
+            <div class="field">
                 <label class="label">Select Ingredients</label>
                 <ingredient-selection :selected-ingredients="selectedIngredients" :recipe-ingredients="inputRecipeIngredients"></ingredient-selection>
             </div>
@@ -74,6 +88,8 @@ export default {
             inputTitle: '',
             inputDescription: '',
             inputMainImageUrl: '',
+            inputTotalTime: '',
+            inputActiveTime: '',
             inputRecipeIngredients: [],
             inputSteps: [],
             selectedSeasonings: this.$store.state.Seasonings.seasonings.map(s => ({
@@ -108,6 +124,8 @@ export default {
                 title: this.inputTitle,
                 description: this.inputDescription,
                 mainImageUrl: this.inputMainImageUrl,
+                activeTime: this.inputActiveTime,
+                totalTime: this.inputTotalTime,
                 ingredients: this.inputRecipeIngredients.map(i => ({
                     ingredient: i.id,
                     isFrozen: i.isFrozen,
@@ -125,6 +143,8 @@ export default {
                     this.inputTitle= '';
                     this.inputDescription = '';
                     this.inputMainImageUrl = '';
+                    this.inputActiveTime = '';
+                    this.inputTotalTime = '';
                     this.inputRecipeIngredients = [],
                     this.inputSteps = [];
                     this.selectedSeasonings.forEach(s => {
