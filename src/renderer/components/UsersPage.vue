@@ -9,8 +9,8 @@
 
 <script>
 import ActionNav from './lib/ActionNav.vue';
-import Create from './RecipesPage/Create';
-import Edit from './RecipesPage/Edit';
+import Create from './UsersPage/Create';
+import Edit from './UsersPage/Edit';
 
 export default {
   components: {

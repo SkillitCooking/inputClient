@@ -33,6 +33,13 @@
               <p v-show="errors.has('lastname')" class="help is-danger">This is required</p>
           </div>
           <div class="field">
+              <label class="label">Age</label>
+              <div class="control">
+                  <input v-validate="'required|min_value:0|max_value:200'" v-model="inputAge" name="age" class="input" type="text" placeholder="Input Age">
+              </div>
+              <p v-show="errors.has('age')" class="help is-danger">This is required and must be a number from 0-200</p>
+          </div>
+          <div class="field">
               <label class="label">Email</label>
               <div class="control">
                   <input v-validate="'required|email'" v-model="inputEmail" name="email" class="input" type="text" placeholder="Input Email">
@@ -110,19 +117,31 @@
               <div class="field-body">
                   <div class="field">
                     <p class="help">Meals Per Week</p>
-                    <number-counter :count="inputDeliveryPreferences.mealsPerWeek" :suffix="'meals'"></number-counter>
+                    <number-counter
+                        v-on:increment-meals="inputDeliveryPreferences.mealsPerWeek++"
+                        v-on:decrement-meals="inputDeliveryPreferences.mealsPerWeek--"
+                        :count="inputDeliveryPreferences.mealsPerWeek" :suffix="'meals'"></number-counter>
                   </div>
                   <div class="field">
                     <p class="help">Min Deliveries Per Week</p>
-                    <number-counter :count="inputDeliveryPreferences.minDeliveriesPerWeek" :suffix="'min-del'"></number-counter>
+                    <number-counter
+                        v-on:increment-min-del="inputDeliveryPreferences.minDeliveriesPerWeek++"
+                        v-on:decrement-min-del="inputDeliveryPreferences.minDeliveriesPerWeek--"
+                        :count="inputDeliveryPreferences.minDeliveriesPerWeek" :suffix="'min-del'"></number-counter>
                   </div>
                   <div class="field">
                     <p class="help">Max Deliveries Per Week</p>
-                    <number-counter :count="inputDeliveryPreferences.maxDeliveriesPerWeek" :suffix="'max-del'"></number-counter>
+                    <number-counter
+                        v-on:increment-max-del="inputDeliveryPreferences.maxDeliveriesPerWeek++"
+                        v-on:decrement-max-del="inputDeliveryPreferences.maxDeliveriesPerWeek--"
+                        :count="inputDeliveryPreferences.maxDeliveriesPerWeek" :suffix="'max-del'"></number-counter>
                   </div>
                   <div class="field">
                     <p class="help">Servings Per Meal</p>
-                    <number-counter :count="inputDeliveryPreferences.servingsPerMeal" :suffix="'servings'"></number-counter>
+                    <number-counter
+                        v-on:increment-servings="inputDeliveryPreferences.servingsPerMeal++"
+                        v-on:decrement-servings="inputDeliveryPreferences.servingsPerMeal--"
+                        :count="inputDeliveryPreferences.servingsPerMeal" :suffix="'servings'"></number-counter>
                   </div>
               </div>
           </div>
@@ -165,7 +184,7 @@ export default {
                 state: '',
                 zip: ''
             },
-            inputAge: '',
+            inputAge: 0,
             inputGender: '',
             inputDeliveryPreferences: {
                 mealsPerWeek: 0,
@@ -210,7 +229,7 @@ export default {
                 this.inputFirstName = '';
                 this.inputLastName = '';
                 this.inputEmail = '';
-                this.inputAge = '';
+                this.inputAge = 0;
                 this.inputGender = '';
                 this.inputAddress = {
                     street: '',

@@ -50,6 +50,13 @@
                   <p v-show="errors.has('lastname')" class="help is-danger">Required</p>
               </div>
               <div class="field">
+                <label class="label">Age</label>
+                <div class="control">
+                    <input v-validate="'required|min_value:0|max_value:200'" v-model="selectedUser.age" name="age" class="input" type="text" placeholder="Input Age">
+                </div>
+                <p v-show="errors.has('age')" class="help is-danger">This is required and must be a number from 0-200</p>
+            </div>
+              <div class="field">
                   <label class="label">Email</label>
                   <div class="control">
                       <input type="text" v-model="selectedUser.email" placeholder="Email" class="input" name="email" v-validate="'required|email'">
@@ -126,19 +133,32 @@
               <div class="field-body">
                   <div class="field">
                     <p class="help">Meals Per Week</p>
-                    <number-counter :count="selectedUser.deliveryPreferences.mealsPerWeek" :suffix="'meals'"></number-counter>
+                    <number-counter
+                        v-on:increment-meals="selectedUser.deliveryPreferences.mealsPerWeek++"
+                        v-on:decrement-meals="selectedUser.deliveryPreferences.mealsPerWeek--"
+                        :count="selectedUser.deliveryPreferences.mealsPerWeek" :suffix="'meals'"></number-counter>
                   </div>
                   <div class="field">
                     <p class="help">Min Deliveries Per Week</p>
-                    <number-counter :count="selectedUser.deliveryPreferences.minDeliveriesPerWeek" :suffix="'min-del'"></number-counter>
+                    <number-counter
+                        v-on:increment-min-del="selectedUser.deliveryPreferences.minDeliveriesPerWeek++"
+                        v-on:decrement-min-del="selectedUser.deliveryPreferences.minDeliveriesPerWeek--"
+                        :count="selectedUser.deliveryPreferences.minDeliveriesPerWeek" :suffix="'min-del'"></number-counter>
                   </div>
                   <div class="field">
                     <p class="help">Max Deliveries Per Week</p>
-                    <number-counter :count="selectedUser.deliveryPreferences.maxDeliveriesPerWeek" :suffix="'max-del'"></number-counter>
+                    <number-counter 
+                        v-on:increment-max-del="selectedUser.deliveryPreferences.maxDeliveriesPerWeek++"
+                        v-on:decrement-max-del="selectedUser.deliveryPreferences.maxDeliveriesPerWeek--"
+                        :count="selectedUser.deliveryPreferences.maxDeliveriesPerWeek" :suffix="'max-del'"></number-counter>
                   </div>
                   <div class="field">
                     <p class="help">Servings Per Meal</p>
-                    <number-counter :count="selectedUser.deliveryPreferences.servingsPerMeal" :suffix="'servings'"></number-counter>
+                    <number-counter 
+                        v-on:increment-servings="selectedUser.deliveryPreferences.servingsPerMeal++"
+                        v-on:decrement-servings="selectedUser.deliveryPreferences.servingsPerMeal--"
+                        :count="selectedUser.deliveryPreferences.servingsPerMeal"
+                        :suffix="'servings'"></number-counter>
                   </div>
               </div>
             </div>
@@ -158,6 +178,7 @@
 <script>
 import Circle3 from 'vue-loading-spinner/src/components/Circle3';
 import states from '../lib/states';
+import NumberCounter from '../lib/NumberCounter';
 
 export default {
     components: {
@@ -187,7 +208,7 @@ export default {
             if(!this.selected) {
                 this.selectedUser = null;
             } else {
-                this.selectedUser = Object.assign({}, this.selected);
+                this.selectedUser = JSON.parse(JSON.stringify(this.selected));
             }
         },
         save() {
