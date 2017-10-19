@@ -12,6 +12,7 @@ import units from './units';
 import seasonings from './seasonings';
 import ingredients from './ingredients';
 import recipes from './recipes';
+import mealPlans from './mealPlans';
 
 export {
    users,
@@ -19,5 +20,6 @@ export {
    units,
    seasonings,
    ingredients,
-   recipes
+   recipes,
+   mealPlans
 }

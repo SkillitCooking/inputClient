@@ -28,11 +28,13 @@
 <script>
 import {mapActions} from 'vuex'
 import Jumper from 'vue-loading-spinner/src/components/Jumper';
+import DeliveryTime from './lib/DeliveryTime';
 
 export default {
 
   components: {
-    Jumper
+    Jumper,
+    DeliveryTime
   },
 
   data: function() {

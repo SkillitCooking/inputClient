@@ -9,6 +9,7 @@
         <router-link to="/tags" class="navbar-item">Tags</router-link>
         <router-link to="/units" class="navbar-item">Units</router-link>
         <router-link to="/users" class="navbar-item">Users</router-link>
+        <router-link to="/mealPlans" class="navbar-item">Meal Plans</router-link>
       </div>
     </nav>
     <router-view></router-view>

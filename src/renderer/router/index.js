@@ -93,6 +93,18 @@ let router = new Router({
       }
     },
     {
+      path: '/mealPlans',
+      name: 'meal-plans-page',
+      component: require('@/components/MealPlansPage'),
+      beforeEnter: async function(to, from, next) {
+        await Promise.all([
+          store.dispatch('fetchUsers'),
+          store.dispatch('fetchRecipes')
+        ]);
+        next();
+      }
+    },
+    {
       path: '*',
       redirect: '/'
     }
