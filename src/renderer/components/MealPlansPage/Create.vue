@@ -24,9 +24,9 @@
               <div class="field">
                   <label class="label">Title</label>
                   <div class="control">
-                      <input type="text" class="input" placeholder="Meal Plan Title" v-model="inputTitle">
+                      <input type="text" class="input" placeholder="Meal Plan Title" v-model="inputTitle" name="title" v-validate="'required'">
                   </div>
-                  <p class="help">Optional</p>
+                  <p v-if="errors.has('title')" class="help is-danger">Required</p>
               </div>
               <div class="field">
                   <label class="label">Overview</label>

@@ -4,7 +4,7 @@
           <div class="field-body">
               <div class="field">
                   <input type="text"
-                   v-validate="{rules: {regex: /^((10|11|12)|[1-9]):[0-5][0-9]$/, required: true} }" 
+                   v-validate="{rules: {regex: /^((00|10|11|12|13|14|15|16|17|18|19|20|21|22|23)|[0-9]):[0-5][0-9]$/, required: true} }" 
                    placeholder="Input Time (military, e.g. 15:00 for 3:00pm)"
                    class="input"
                    name="time"
@@ -83,9 +83,9 @@ export default {
                 let dateObj = getDateObj(this.date, this.time);
                 let isDST = new Date(dateObj.year, dateObj.month, dateObj.day).isDST();
                 if(isDST) {
-                    dateObj.hour = dateObj.hour + this.timezone.dstOffset;
+                    dateObj.hour = dateObj.hour - this.timezone.dstOffset;
                 } else {
-                    dateObj.hour = dateObj.hour + this.timezone.stdOffset;   
+                    dateObj.hour = dateObj.hour - this.timezone.stdOffset;   
                 }
                 let date = new Date(Date.UTC(dateObj.year, dateObj.month, dateObj.day, dateObj.hour, dateObj.min));
                 this.$emit('update:delivery', {
@@ -95,21 +95,24 @@ export default {
             }
         },
         parseDelivery(deliveryStr, timezoneStr) {
+            console.log('delstr', deliveryStr);
+            console.log('tz', timezoneStr);
             this.timezone = this.zones.find(zone => zone.id === timezoneStr);
             let date = new Date(deliveryStr);
             //reset to local tz appearing time
             if(date.isDST()) {
-                date.setHours(date.getHours() - this.timezone.dstOffset);
+                date.setUTCHours(date.getUTCHours() + this.timezone.dstOffset);
             } else {
-                date.setHours(date.getHours() - this.timezone.stdOffset);
+                date.setUTCHours(date.getUTCHours() + this.timezone.stdOffset);
             }
-            let month = date.getMonth() + 1; //offset
-            let minutes = date.getMinutes();
+            date.get
+            let month = date.getUTCMonth() + 1; //offset
+            let minutes = date.getUTCMinutes();
             if(minutes < 10) {
                 minutes = '0' + minutes;
             }
-            this.time = date.getHours() + ':' + minutes;
-            this.date = month + '/' + date.getDate() + '/' + date.getFullYear();
+            this.time = date.getUTCHours() + ':' + minutes;
+            this.date = month + '/' + date.getUTCDate() + '/' + date.getUTCFullYear();
             //prefix '0' to date if necessary
             if(month < 10) {
                 this.date = '0' + this.date;
