@@ -194,7 +194,6 @@ export default {
             } else {
                 this.selectedMealPlan = Object.assign({}, this.selected);
                 this.mealPlanIsSelected = true;
-                console.log('selectedMealPlan', this.selectedMealPlan);
                 this.deliveryObj = {
                     deliveryTime: this.selectedMealPlan.deliveryTime,
                     deliveryTimezone: this.selectedMealPlan.deliveryTimezone
@@ -211,7 +210,6 @@ export default {
             if(this.selectedUser) {
                 this.selectedUsername = this.selectedUser.username;
                 this.selectedUserId = this.selectedUser.id;
-                console.log('selectedUser', this.selectedUser);
                 this.selected = '';
                 this.selectMealPlan();
                 this.$store.dispatch('fetchMealPlans', this.selectedUserId)

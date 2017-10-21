@@ -79,7 +79,6 @@ const actions = {
         });
     },
     fetchMealPlans({ commit }, userId) {
-        console.log('user id', userId);
         return new Promise(async (resolve, reject) => {
             commit(mutation.LOADING.START);
             commit(mutation.MEAL_PLAN.SET_API_ERROR, {isError: false});

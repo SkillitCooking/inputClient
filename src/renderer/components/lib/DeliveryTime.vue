@@ -95,8 +95,6 @@ export default {
             }
         },
         parseDelivery(deliveryStr, timezoneStr) {
-            console.log('delstr', deliveryStr);
-            console.log('tz', timezoneStr);
             this.timezone = this.zones.find(zone => zone.id === timezoneStr);
             let date = new Date(deliveryStr);
             //reset to local tz appearing time
