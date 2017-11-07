@@ -2,6 +2,7 @@
     <div class="columns">
         <div class="column">
             <p class="title is-5 has-text-info">{{ingredient.nameSingular}}</p>
+            <p class="title is-5 has-text-info">{{ingredient.storeKeepingName}}</p>
             <p class="subtitle is-6">Serving Size: {{ingredient.servingSize}}</p>
             <div class="field">
                 <label class="label">Proportion</label>

@@ -51,7 +51,7 @@ const actions = {
                 commit(mutation.INGREDIENT.REMOVE_INGREDIENT, deletedIngredient.id);
                 setTimeout(() => {
                     commit(mutation.LOADING.STOP);
-                    resolve(deletedIngredient.nameSingular);
+                    resolve(deletedIngredient.nameSingular + ':::' + editedIngredient.storeKeepingName);
                 }, TIMEOUT);
             }
         });
@@ -72,7 +72,7 @@ const actions = {
                 commit(mutation.INGREDIENT.EDIT_INGREDIENT, editedIngredient);
                 setTimeout(() => {
                     commit(mutation.LOADING.STOP);
-                    resolve(editedIngredient.nameSingular);
+                    resolve(editedIngredient.nameSingular + ':::' + editedIngredient.storeKeepingName);
                 }, TIMEOUT);
             }
         });
@@ -118,7 +118,7 @@ const actions = {
                 commit(mutation.INGREDIENT.ADD_INGREDIENT, fetchedIngredient);
                 setTimeout(() => {
                     commit(mutation.LOADING.STOP);
-                    resolve(fetchedIngredient.nameSingular);
+                    resolve(fetchedIngredient.nameSingular + ':::' + fetchedIngredient.storeKeepingName);
                 }, TIMEOUT);
             }
         });

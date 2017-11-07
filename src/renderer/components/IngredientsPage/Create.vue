@@ -19,6 +19,13 @@
                 <p v-show="errors.has('plural')" class="help is-danger">This is Required</p>
             </div>
             <div class="field">
+                <label class="label">Store Keeping Name</label>
+                <div class="control">
+                    <input type="text" v-validate="'required'" v-model="inputStoreName" name="storename" placeholder="Input Store Keeping Name" class="input">
+                </div>
+                <p v-show="errors.has('storename')" class="help is-danger">This is Required</p>
+            </div>
+            <div class="field">
                 <label class="label">Description</label>
                 <div class="control">
                     <textarea v-model="inputDescription" class="textarea" placeholder="Input Description"></textarea>
@@ -135,6 +142,7 @@ export default {
           let ingredient = {
               nameSingular: this.inputNameSingular,
               namePlural: this.inputNamePlural,
+              storeKeepingName: this.inputStoreName,
               description: this.inputDescription,
               servingSize: this.inputServingSize,
               totalSize: this.inputTotalSize,
@@ -155,6 +163,7 @@ export default {
                 this.savedIngredient = savedIngredient;
                 this.inputNameSingular = '';
                 this.inputNamePlural = '';
+                this.inputStoreName = '';
                 this.inputDescription = '';
                 this.inputServingSize = 1;
                 this.inputTotalSize = 1;
@@ -185,6 +194,7 @@ export default {
         isError: false,
         inputNameSingular: '',
         inputNamePlural: '',
+        inputStoreName: '',
         inputDescription: '',
         inputServingSize: 1,
         inputTotalSize: 1,

@@ -7,7 +7,7 @@
             <nav class="panel">
                 <p class="panel-heading">Select Ingredients</p>
                 <div class="panel-block" v-for="(ingredient, index) in selectedIngredients" :key="ingredient.id">
-                    <button :class="getPanelClass(index)" v-on:click="selectIngredient(index)">{{ingredient.nameSingular}}</button>
+                    <button :class="getPanelClass(index)" v-on:click="selectIngredient(index)">{{ingredient.nameSingular}}:::{{ingredient.storeKeepingName}}</button>
                 </div>
             </nav>
         </div>
@@ -35,6 +35,7 @@ export default {
                 this.recipeIngredients.push({
                     id: this.selectedIngredients[index].id,
                     nameSingular: this.selectedIngredients[index].nameSingular,
+                    storeKeepingName: this.selectedIngredients[index].storeKeepingName,
                     servingSize: this.selectedIngredients[index].servingSize,
                     proportion: 1,
                     isFrozen: false
