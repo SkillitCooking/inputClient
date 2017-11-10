@@ -79,11 +79,11 @@
                     </div>
                 </div>
                 <div class="field">
-                    <label class="label">Unit Price</label>
+                    <label class="label">Total Price</label>
                     <div class="control">
-                        <input v-model="selectedIngredient.estUnitPrice" v-validate="'required|numeric'" class="input" type="text" name="unit-price" placeholder="Input Unit Price">
+                        <input v-model="selectedIngredient.estTotalPrice" v-validate="'required|numeric'" class="input" type="text" name="total-price" placeholder="Input Total Price">
                     </div>
-                    <p v-show="errors.has('unit-price')" class="help">Required and must be a decimal number</p>
+                    <p v-show="errors.has('total-price')" class="help">Required and must be a decimal number</p>
                 </div>
                 <div class="field">
                     <label class="label">Select Category</label>
@@ -226,7 +226,7 @@ export default {
               description: this.selectedIngredient.description,
               servingSize: this.selectedIngredient.servingSize,
               totalSize: this.selectedIngredient.totalSize,
-              estUnitPrice: this.selectedIngredient.estUnitPrice,
+              estTotalPrice: this.selectedIngredient.estTotalPrice,
               isComposite: this.selectedIngredient.isComposite,
               units: this.selectedUnit.id,
               tags: [],

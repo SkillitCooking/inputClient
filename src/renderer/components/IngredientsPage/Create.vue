@@ -64,11 +64,11 @@
                 </div>
             </div>
             <div class="field">
-                <label class="label">Unit Price</label>
+                <label class="label">Total Price</label>
                 <div class="control">
-                    <input v-model="inputUnitPrice" v-validate="'required|decimal'" placeholder="Input Unit Price" name="unit-price" class="input" type="text">
+                    <input v-model="inputTotalPrice" v-validate="'required|decimal'" placeholder="Input Total Price" name="total-price" class="input" type="text">
                 </div>
-                <p v-show="errors.has('unit-price')" class="help is-danger">Required, and must be a decimal</p>
+                <p v-show="errors.has('total-price')" class="help is-danger">Required, and must be a decimal</p>
             </div>
             <div class="field">
                 <label class="label">Select Category</label>
@@ -146,7 +146,7 @@ export default {
               description: this.inputDescription,
               servingSize: this.inputServingSize,
               totalSize: this.inputTotalSize,
-              estUnitPrice: this.inputUnitPrice,
+              estTotalPrice: this.inputTotalPrice,
               isComposite: this.inputIsComposite,
               units: this.selectedUnit.id,
               category: this.selectedCategory.id,
@@ -167,7 +167,7 @@ export default {
                 this.inputDescription = '';
                 this.inputServingSize = 1;
                 this.inputTotalSize = 1;
-                this.inputUnitPrice = 0;
+                this.inputTotalPrice = 0;
                 this.inputIsComposite = false;
                 this.selectedUnit = '';
                 this.$refs["unitsSelect"].value = '';
@@ -198,7 +198,7 @@ export default {
         inputDescription: '',
         inputServingSize: 1,
         inputTotalSize: 1,
-        inputUnitPrice: 0,
+        inputTotalPrice: 0,
         inputIsComposite: false,
         selectedUnit: '',
         selectedCategory: '',
