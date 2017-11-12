@@ -8,6 +8,10 @@ async function saveUnit(units) {
         let res = await axios.post('/units', {
             units
         });
+        if(res.error) {
+            handleError(e);
+            return res;
+        }
         return res.data.data;
     } catch (e) {
         handleError(e);
@@ -17,6 +21,10 @@ async function saveUnit(units) {
 async function deleteUnit(unitId) {
     try {
         let res = await axios.delete('/units/' + unitId);
+        if(res.error) {
+            handleError(e);
+            return res;
+        }
         return res.data.data[0];
     } catch (e) {
         handleError(e);
@@ -26,6 +34,10 @@ async function deleteUnit(unitId) {
 async function editUnit(units) {
     try {
         let res = await axios.put('/units/' + units.id, {units});
+        if(res.error) {
+            handleError(e);
+            return res;
+        }
         return res.data.data[0];
     } catch (e) {
         handleError(e);
@@ -35,6 +47,10 @@ async function editUnit(units) {
 async function fetchUnits() {
     try {
         let res = await axios.get('/units');
+        if(res.error) {
+            handleError(e);
+            return res;
+        }
         return res.data.data;
     } catch (e) {
         handleError(e);

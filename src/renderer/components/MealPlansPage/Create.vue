@@ -49,6 +49,19 @@
                         :class="getRecipeTagClass(index)">{{recipe.title}}</span>
                   </div>
               </div>
+              <ul>
+                  <li
+                    v-for="(recipe, index) in selectedRecipes"
+                    v-if="recipe.selected"
+                    :key="recipe.id">
+                    <div class="field">
+                        <label class="label">{{recipe.title}}'s Order</label>
+                        <div class="control">
+                            <input type="text" class="input" placeholder="Order (integer)" v-model="recipe.order">
+                        </div>
+                    </div>
+                  </li>
+              </ul>
               <div class="field">
                   <div class="control">
                       <button v-on:click="save()" class="button is-primary">Save</button>
@@ -100,6 +113,9 @@ export default {
         },
         selectRecipe(index) {
             this.selectedRecipes[index].selected = ! this.selectedRecipes[index].selected;
+            if(this.selectedRecipes[index].selected) {
+                this.selectedRecipes[index].order = 1;
+            }
         },
         save() {
             //need to get recipe ids
@@ -107,7 +123,10 @@ export default {
                 user: this.selectedUserId,
                 deliveryTime: this.inputDeliveryTime,
                 deliveryTimezone: this.inputDeliveryTimezone,
-                recipes: this.selectedRecipes.filter(r => r.selected).map(r => r.id),
+                recipes: this.selectedRecipes.filter(r => r.selected).map(r => ({
+                    id: r.id,
+                    order: r.order
+                })),
                 title: this.inputTitle,
                 overview: this.inputOverview
             };

@@ -9,6 +9,10 @@ export default {
             let res = await axios.post('/mealPlans', {
                 mealPlan
             });
+            if(res.error) {
+                handleError(e);
+                return res;
+            }
             return res.data.data;
         } catch(e) {
             handleError(e);
@@ -18,6 +22,10 @@ export default {
     async fetchMealPlans(userId) {
         try {
             let res = await axios.get('/mealPlans/byUser/' + userId);
+            if(res.error) {
+                handleError(e);
+                return res;
+            }
             return res.data.data;
         } catch (e) {
             handleError(e);
@@ -29,6 +37,10 @@ export default {
                 mealPlan,
                 recipesToRemove
             });
+            if(res.error) {
+                handleError(e);
+                return res;
+            }
             return res.data.data;
         } catch(e) {
             handleError(e);
@@ -37,6 +49,10 @@ export default {
     async deleteMealPlan(mealPlanId) {
         try {
             let res = await axios.delete('/mealPlans/' + mealPlanId);
+            if(res.error) {
+                handleError(e);
+                return res;
+            }
             return res.data.data[0];
         } catch(e) {
             handleError(e);

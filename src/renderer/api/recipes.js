@@ -8,6 +8,10 @@ async function saveRecipe(recipe) {
         let res = await axios.post('/recipes', {
             recipe
         });
+        if(res.error) {
+            handleError(e);
+            return res;
+        }
         return res.data.data;
     } catch (e) {
         handleError(e);
@@ -17,6 +21,10 @@ async function saveRecipe(recipe) {
 async function deleteRecipe(recipeId) {
     try {
         let res = await axios.delete('/recipes/' + recipeId);
+        if(res.error) {
+            handleError(e);
+            return res;
+        }
         return res.data.data[0];
     } catch(e) {
         handleError(e);
@@ -34,6 +42,10 @@ async function editRecipe(recipe, stepsToRemove, stepsToUpdate, recipeIngredient
             seasoningsToRemove,
             tagsToRemove
         });
+        if(res.error) {
+            handleError(e);
+            return res;
+        }
         return res.data.data;
     } catch(e) {
         handleError(e);
@@ -44,7 +56,11 @@ async function fetchRecipes(ids = []) {
     try {
         let res = await axios.post('recipes/getRecipes', {
             ids
-        });        
+        });
+        if(res.error) {
+            handleError(e);
+            return res;
+        }        
         return res.data.data;
     } catch (e) {
         handleError(e);

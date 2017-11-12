@@ -8,6 +8,10 @@ async function saveIngredient(ingredient) {
         let res = await axios.post('/ingredients', {
             ingredient
         });
+        if(res.error) {
+            handleError(e);
+            return res;
+        }
         return res.data.data;
     } catch (e) {
         handleError(e);
@@ -17,6 +21,10 @@ async function saveIngredient(ingredient) {
 async function deleteIngredient(ingredientId) {
     try {
         let res = await axios.delete('/ingredients/' + ingredientId);
+        if(res.error) {
+            handleError(e);
+            return res;
+        }
         return res.data.data[0];
     } catch(e) {
         handleError(e);
@@ -31,6 +39,10 @@ async function editIngredient(ingredient, composingToRemove, composingToEdit, ta
             composingToEdit,
             tagsToRemove
         });
+        if(res.error) {
+            handleError(e);
+            return res;
+        }
         return res.data.data;
     } catch (e) {
         handleError(e);
@@ -42,6 +54,10 @@ async function fetchIngredients(ids = []) {
         let res = await axios.post('/ingredients/getIngredients', {
             ids
         });
+        if(res.error) {
+            handleError(e);
+            return res;
+        }
         return res.data.data;
     } catch(e) {
         handleError(e);

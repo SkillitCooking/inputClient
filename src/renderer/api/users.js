@@ -13,6 +13,10 @@ async function login(username, password) {
         });
         //set token
         axios.defaults.headers.common['Authorization'] = "Bearer " + res.data.user.token;
+        if(res.error) {
+            handleError(e);
+            return res;
+        }
         return res.data.user;
     } catch (e) {
        handleError(e);
@@ -23,6 +27,10 @@ async function login(username, password) {
 async function fetchUsers() {
     try {
         let res = await axios.get('/users');
+        if(res.error) {
+            handleError(e);
+            return res;
+        }
         return res.data.users;
     } catch (e) {
         handleError(e);
@@ -34,6 +42,10 @@ async function saveUser(user) {
         let res = await axios.post('/users', {
             user
         });
+        if(res.error) {
+            handleError(e);
+            return res;
+        }
         return res.data.user;
     } catch (e) {
         handleError(e);
@@ -45,6 +57,10 @@ async function editUser(user) {
         let res = await axios.put('/users/' + user.id, {
             user
         });
+        if(res.error) {
+            handleError(e);
+            return res;
+        }
         return res.data.user;
     } catch (e) {
         handleError(e);
@@ -54,6 +70,10 @@ async function editUser(user) {
 async function deleteUser(userId) {
     try {
         let res = await axios.delete('/users/' + userId);
+        if(res.error) {
+            handleError(e);
+            return res;
+        }
         return res.data.data[0];
     } catch (e) {
         handleError(e);

@@ -8,6 +8,10 @@ async function saveSeasoning(seasoning) {
         let res = await axios.post('/seasonings', {
             seasoning
         });
+        if(res.error) {
+            handleError(e);
+            return res;
+        }
         return res.data.data;
     } catch (e) {
         handleError(e);
@@ -17,6 +21,10 @@ async function saveSeasoning(seasoning) {
 async function deleteSeasoning(seasoningId) {
     try {
         let res = await axios.delete('/seasonings/' + seasoningId);
+        if(res.error) {
+            handleError(e);
+            return res;
+        }
         return res.data.data[0];
     } catch (e) {
         handleError(e);
@@ -29,6 +37,10 @@ async function editSeasoning(seasoning, removeCompSeasonings) {
             seasoning,
             removeCompSeasonings 
         });
+        if(res.error) {
+            handleError(e);
+            return res;
+        }
         return res.data.data;
     } catch(e) {
         handleError(e);
@@ -40,6 +52,10 @@ async function fetchSeasonings(ids = []) {
         let res = await axios.post('/seasonings/getSeasonings', {
             ids
         });
+        if(res.error) {
+            handleError(e);
+            return res;
+        }
         return res.data.data;
     } catch(e) {
         handleError(e);

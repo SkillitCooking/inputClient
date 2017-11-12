@@ -9,6 +9,10 @@ async function saveTag(tag) {
         let res = await axios.post('/tags', {
             tag
         });
+        if(res.error) {
+            handleError(e);
+            return res;
+        }
         return res.data.data;
     } catch(e) {
        handleError(e);
@@ -18,6 +22,10 @@ async function saveTag(tag) {
 async function fetchTags() {
     try {
         let res = await axios.get('/tags');
+        if(res.error) {
+            handleError(e);
+            return res;
+        }
         return res.data.data;
     } catch (e) {
         handleError(e);
@@ -27,6 +35,10 @@ async function fetchTags() {
 async function deleteTag(tagId) {
     try {
         let res = await axios.delete('/tags/' + tagId);
+        if(res.error) {
+            handleError(e);
+            return res;
+        }
         return res.data.data[0];
     } catch (e) {
         handleError(e);
@@ -36,6 +48,10 @@ async function deleteTag(tagId) {
 async function editTag(tag) {
     try {
         let res = await axios.put('/tags/' + tag.id, {tag});
+        if(res.error) {
+            handleError(e);
+            return res;
+        }
         return res.data.data[0];
     } catch (e) {
         handleError(e);

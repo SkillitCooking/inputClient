@@ -82,15 +82,13 @@
               <div class="field-body">
                   <div class="field">
                       <p class="control is-expanded">
-                          <input class="input" name="street" v-validate="'required'" v-model="selectedUser.address.street" type="text" placeholder="Street Address">
+                          <input class="input" name="street" v-model="selectedUser.address.street" type="text" placeholder="Street Address">
                       </p>
-                    <p v-show="errors.has('street')" class="help is-danger">This is required</p>
                   </div>
                   <div class="field">
                       <p class="control is-expanded">
                           <input class="input" name="street2" v-model="selectedUser.address.street2" type="text" placeholder="Street Address 2">
                       </p>
-                      <p class="help">Optional</p>
                   </div>
               </div>
             </div>
@@ -99,9 +97,8 @@
               <div class="field-body">
                   <div class="field">
                       <p class="control">
-                          <input name="city" v-validate="'required'" v-model="selectedUser.address.city" type="text" class="input" placeholder="City">
+                          <input name="city" v-model="selectedUser.address.city" type="text" class="input" placeholder="City">
                       </p>
-                      <p v-show="errors.has('city')" class="help is-danger">This is required</p>
                   </div>
                   <div class="field">
                       <div class="control">

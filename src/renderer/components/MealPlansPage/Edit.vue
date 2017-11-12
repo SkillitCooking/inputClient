@@ -65,6 +65,19 @@
                         :class="getRecipeTagClass(index)">{{recipe.title}}</span>
                   </div>
               </div>
+              <ul>
+                  <li
+                    v-for="(recipe, index) in selectedRecipes"
+                    v-if="recipe.selected"
+                    :key="recipe.id">
+                    <div class="field">
+                        <label class="label">{{recipe.title}}</label>
+                        <div class="control">
+                            <input type="text" class="input" placeholder="Order (integer)" v-model="recipe.order">
+                        </div>
+                    </div>
+                  </li>
+              </ul>
               <div class="field is-grouped">
                   <div class="control">
                       <button v-on:click="save()" class="button is-info">Save Changes</button>
@@ -92,8 +105,7 @@ export default {
             selectedRecipes: this.$store.state.Recipes.recipes.map(r => ({
                 selected: false,
                 title: r.title,
-                id: r.id,
-                recipeMealPlanId: r.recipeMealPlanId
+                id: r.id
             })),
             editSuccess: false,
             isError: false,
@@ -124,7 +136,10 @@ export default {
                 let recipe = this.selectedMealPlan.recipes.find(recipe => recipe.id === sr.id);
                 if(sr.selected) {
                     if(!recipe) {
-                        mealPlan.recipes.push(sr.id);
+                        mealPlan.recipes.push({
+                            id: sr.id,
+                            order: sr.order    
+                        });
                     }
                 } else {
                     if(recipe) {
@@ -179,6 +194,9 @@ export default {
         },
         selectRecipe(index) {
             this.selectedRecipes[index].selected = !this.selectedRecipes[index].selected;
+            if(this.selectedRecipes[index].selected && !this.selectedRecipes[index].order) {
+                this.selectedRecipes[index].order = 1;
+            }
         },
         getRecipeTagClass(index) {
             return this.selectedRecipes[index].selected ?
@@ -200,8 +218,10 @@ export default {
                 };
                 //select recipes
                 this.selectedRecipes.forEach(sr => {
-                    if(this.selectedMealPlan.recipes.findIndex(recipe => recipe.id === sr.id) !== -1) {
+                    let index = this.selectedMealPlan.recipes.findIndex(recipe => recipe.id === sr.id);
+                    if(index !== -1) {
                         sr.selected = true;
+                        sr.order = this.selectedMealPlan.recipes[index].mealPlanOrder;
                     }
                 });
             }
