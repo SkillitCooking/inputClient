@@ -7,6 +7,8 @@
             <div class="column is-three-quarters">
                 <textarea v-validate="'required'" name="step-text" class="textarea" placeholder="Text for Step" rows="2" v-model="step.text"></textarea>
                 <p v-show="errors.has('step-text')" class="help is-danger">Required</p>
+                <input class="input" v-validate="'url'" name="step-main-link" type="text" placeholder="Mail Link URL" v-model="step.mainLinkUrl"/>
+                <p v-show="errors.has('step-main-link')" class="help is-danger">Must be a url</p>
             </div>
             <div class="column">
                 <button class="button is-danger" v-on:click="removeStep()">Remove Step</button>

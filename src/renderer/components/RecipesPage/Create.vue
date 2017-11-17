@@ -26,6 +26,13 @@
                 <p v-show="errors.has('main-image')" class="help is-danger">Required and must be a url</p>
             </div>
             <div class="field">
+                <label class="label">Main Link Url</label>
+                <div class="control">
+                    <input type="text" v-validate="'url'" name="main-link" class="input" placeholder="Input Main Link Url" v-model="inputMainLinkUrl">
+                </div>
+                <p v-show="errors.has('main-link')" class="help is-danger">Must be a url</p>
+            </div>
+            <div class="field">
                 <label class="label">Total Time</label>
                 <div class="control">
                     <input type="text" v-validate="'required|numeric'" name="total-time" class="input" placeholder="Input Total Time (minutes)" v-model="inputTotalTime">
@@ -88,6 +95,7 @@ export default {
             inputTitle: '',
             inputDescription: '',
             inputMainImageUrl: '',
+            inputMainLinkUrl: '',
             inputTotalTime: '',
             inputActiveTime: '',
             inputRecipeIngredients: [],
@@ -124,6 +132,7 @@ export default {
                 title: this.inputTitle,
                 description: this.inputDescription,
                 mainImageUrl: this.inputMainImageUrl,
+                mainLinkUrl: this.inputMainLinkUrl,
                 activeTime: this.inputActiveTime,
                 totalTime: this.inputTotalTime,
                 ingredients: this.inputRecipeIngredients.map(i => ({
@@ -143,6 +152,7 @@ export default {
                     this.inputTitle= '';
                     this.inputDescription = '';
                     this.inputMainImageUrl = '';
+                    this.inputMainLinkUrl = '';
                     this.inputActiveTime = '';
                     this.inputTotalTime = '';
                     this.inputRecipeIngredients = [],

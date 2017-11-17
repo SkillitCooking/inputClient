@@ -42,6 +42,13 @@
                     <p v-show="errors.has('main-image')" class="help is-danger">Required and must be a valid URL</p>
                 </div>
                 <div class="field">
+                    <label class="label">Main Link Url</label>
+                    <div class="control">
+                        <input v-model="selectedRecipe.mainLinkUrl" v-validate="'url'" name="main-link" type="text" class="input" placeholder="Input Main Link Url">
+                    </div>
+                    <p v-show="errors.has('main-link')" class="help is-danger">Must be a valid URL</p>
+                </div>
+                <div class="field">
                     <label class="label">Total Time</label>
                     <div class="control">
                         <input type="text" v-validate="'required|numeric'" name="total-time" class="input" placeholder="Input Total Time (minutes)" v-model="selectedRecipe.totalTime">
@@ -173,6 +180,7 @@ export default {
                 title: this.selectedRecipe.title,
                 description: this.selectedRecipe.description,
                 mainImageUrl: this.selectedRecipe.mainImageUrl,
+                mainLinkUrl: this.selectedRecipe.mainLinkUrl,
                 activeTime: this.selectedRecipe.activeTime,
                 totalTime: this.selectedRecipe.totalTime,
                 seasonings: [],
@@ -238,6 +246,7 @@ export default {
                         stepToUpdate = {
                             id: ss.id,
                             order: this.selectedRecipe.steps[index].order,
+                            mainLinkUrl: this.selectedRecipe.steps[index].mainLinkUrl,
                             text: this.selectedRecipe.steps[index].text
                         };
                     }
