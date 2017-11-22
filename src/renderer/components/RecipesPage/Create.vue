@@ -52,7 +52,7 @@
             </div>
             <div class="field">
                 <label class="label">Select Seasonings</label>
-                <item-select :items="selectedSeasonings" :can-be-optional="false"></item-select>
+                <seasoning-select :seasonings="selectedSeasonings"></seasoning-select>
             </div>
             <div class="field">
                 <label class="label">Input Steps</label>
@@ -78,6 +78,7 @@
 <script>
 import Jawn from 'vue-loading-spinner/src/components/Jawn';
 import IngredientSelection from './IngredientSelection';
+import SeasoningSelect from './SeasoningSelect';
 import ItemSelect from '../lib/ItemSelect';
 import Steps from './Steps';
 
@@ -85,6 +86,7 @@ export default {
     components: {
         Jawn,
         IngredientSelection,
+        SeasoningSelect,
         ItemSelect,
         Steps
     },

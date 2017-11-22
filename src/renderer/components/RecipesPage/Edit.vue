@@ -69,7 +69,7 @@
                 </div>
                 <div class="field">
                     <label class="label">Select Seasonings</label>
-                    <item-select :items="selectedSeasonings" :can-be-optional="false"></item-select>
+                    <seasoning-select :seasonings="selectedSeasonings"></seasoning-select>
                 </div>
                 <div class="field">
                     <label class="label">Input Steps</label>
@@ -97,13 +97,16 @@ import Jawn from 'vue-loading-spinner/src/components/Jawn';
 import IngredientSelection from './IngredientSelection';
 import ItemSelect from '../lib/ItemSelect';
 import Steps from './Steps';
+import SeasoningSelect from './SeasoningSelect';
+import {recipeSeasoningCmp} from '../lib/helpers';
 
 export default {
     components: {
         Jawn,
         IngredientSelection,
         ItemSelect,
-        Steps
+        Steps,
+        SeasoningSelect
     },
     data: function() {
         return {
@@ -146,12 +149,15 @@ export default {
                     return stepA.order - stepB.order;
                 });
                 this.selectedSeasonings.forEach(s => {
-                    if(this.selected.seasonings.find(ss => ss.id === s.id)) {
+                    let ss = this.selected.seasonings.find(ss => ss.id === s.id)
+                    if(ss) {
                         s.selected = true;
+                        s.presentOrder = ss.presentOrder;
                     } else {
                         s.selected = false;
                     }
                 });
+                this.selectedSeasonings.sort(recipeSeasoningCmp);
                 this.selectedTags.forEach(t => {
                     if(this.selected.tags.find(st => st.id === t.id)) {
                         t.selected = true;
@@ -174,6 +180,7 @@ export default {
             let recipeIngredientsToRemove = [];
             let recipeIngredientsToUpdate = [];
             let seasoningsToRemove = [];
+            let seasoningsToUpdate = [];
             let tagsToRemove = [];
             let recipe = {
                 id: this.selectedRecipe.id,
@@ -189,13 +196,24 @@ export default {
                 steps: []
             };
             //handle seasonings
-            this.selectedSeasonings.forEach(ss => {
+            this.selectedSeasonings.forEach((ss, selSeaIndex) => {
                 if(ss.selected) {
-                    let index = this.selectedRecipe.seasonings.findIndex(s => s.id === ss.id)
+                    let index = this.selectedRecipe.seasonings.findIndex(s => s.id === ss.id);
                     if(index !== -1) {
+                        //check for needed updating
+                        if(selSeaIndex + 1 !== this.selectedRecipe.seasonings[index].presentOrder) {
+                            //then update
+                            seasoningsToUpdate.push({
+                                id: this.selectedRecipe.seasonings[index].recipeSeaId,
+                                presentOrder: selSeaIndex + 1
+                            });
+                        }
                         this.selectedRecipe.seasonings.splice(index, 1);
                     } else {
-                        recipe.seasonings.push(ss.id);
+                        recipe.seasonings.push({
+                            id: ss.id,
+                            presentOrder: selSeaIndex + 1
+                        });
                     }
                 }
             });
@@ -274,6 +292,7 @@ export default {
                     stepsToRemove.push(ss.id);
                 }
             });
+            console.log('seasoningsToUpdate', seasoningsToUpdate);
             //filter on lack of id property on selectedRecipe.steps
             recipe.steps.push(...this.selectedRecipe.steps.filter(s => !s.id));
             this.$store.dispatch('editRecipe', {
@@ -283,7 +302,8 @@ export default {
                 recipeIngredientsToRemove,
                 recipeIngredientsToUpdate,
                 tagsToRemove,
-                seasoningsToRemove
+                seasoningsToRemove,
+                seasoningsToUpdate
             })
             .then((editedRecipe) => {
                 this.editSuccess = true;

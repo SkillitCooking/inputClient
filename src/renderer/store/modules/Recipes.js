@@ -57,7 +57,7 @@ const actions = {
         return new Promise(async (resolve, reject) => {
             commit(mutation.LOADING.START);
             commit(mutation.RECIPE.SET_API_ERROR, {isError: false});
-            let editedRecipe = await recipesAPI.editRecipe(payload.recipe, payload.stepsToRemove, payload.stepsToUpdate, payload.recipeIngredientsToRemove, payload.recipeIngredientsToUpdate, payload.seasoningsToRemove, payload.tagsToRemove);
+            let editedRecipe = await recipesAPI.editRecipe(payload.recipe, payload.stepsToRemove, payload.stepsToUpdate, payload.recipeIngredientsToRemove, payload.recipeIngredientsToUpdate, payload.seasoningsToRemove, payload.seasoningsToUpdate, payload.tagsToRemove);
             if(editedRecipe.hasOwnProperty('error')) {
                 commit(mutation.RECIPE.SET_API_ERROR, {isError: true, error: editedRecipe.error});
                 setTimeout(() => {

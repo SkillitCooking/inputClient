@@ -31,7 +31,7 @@ async function deleteRecipe(recipeId) {
     }
 }
 
-async function editRecipe(recipe, stepsToRemove, stepsToUpdate, recipeIngredientsToRemove, recipeIngredientsToUpdate, seasoningsToRemove, tagsToRemove) {
+async function editRecipe(recipe, stepsToRemove, stepsToUpdate, recipeIngredientsToRemove, recipeIngredientsToUpdate, seasoningsToRemove, seasoningsToUpdate, tagsToRemove) {
     try {
         let res = await axios.put('/recipes/' + recipe.id, {
             recipe,
@@ -40,6 +40,7 @@ async function editRecipe(recipe, stepsToRemove, stepsToUpdate, recipeIngredient
             recipeIngredientsToRemove,
             recipeIngredientsToUpdate,
             seasoningsToRemove,
+            seasoningsToUpdate,
             tagsToRemove
         });
         if(res.error) {

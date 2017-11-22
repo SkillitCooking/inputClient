@@ -7,6 +7,7 @@ import router from './router'
 import store from './store'
 
 import 'bulma/css/bulma.css'
+import 'font-awesome/css/font-awesome.min.css'
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 
