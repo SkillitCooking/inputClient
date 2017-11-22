@@ -38,7 +38,7 @@ const actions = {
         return new Promise(async (resolve, reject) => {
             commit(mutation.LOADING.START);
             commit(mutation.MEAL_PLAN.SET_API_ERROR, {isError: false});
-            let editedMealPlan = await mealPlansAPI.editMealPlan(payload.mealPlan, payload.recipesToRemove);
+            let editedMealPlan = await mealPlansAPI.editMealPlan(payload.mealPlan, payload.recipesToRemove, payload.ingredientsToRemove);
             if(editedMealPlan.hasOwnProperty('error')) {
                 commit(mutation.MEAL_PLAN.SET_API_ERROR, {isError: true, error: editedMealPlan.error});
                 setTimeout(() => {

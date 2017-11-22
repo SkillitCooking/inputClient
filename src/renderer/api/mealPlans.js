@@ -31,11 +31,12 @@ export default {
             handleError(e);
         }
     },
-    async editMealPlan(mealPlan, recipesToRemove) {
+    async editMealPlan(mealPlan, recipesToRemove, ingredientsToRemove) {
         try {
             let res = await axios.put('/mealPlans/' + mealPlan.id, {
                 mealPlan,
-                recipesToRemove
+                recipesToRemove,
+                ingredientsToRemove
             });
             if(res.error) {
                 handleError(e);

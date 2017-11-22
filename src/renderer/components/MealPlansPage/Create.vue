@@ -37,6 +37,18 @@
               </div>
               <label class="label">Delivery Time</label>
               <delivery-time @update:delivery="updateDelivery"></delivery-time>
+              <!-- select ingredients -->
+              <div class="field">
+                  <label class="label">Select Meal Plan Specific Ingredients</label>
+                  <div class="tags">
+                      <span
+                        class="tag"
+                        v-for="(ingredient, index) in selectedIngredients"
+                        :key="ingredient.id"
+                        v-on:click="selectIngredient(index)"
+                        :class="getIngredientTagClass(index)">{{ingredient.nameSingular}}</span>
+                  </div>
+              </div>
               <!-- select recipes -->
               <div class="field">
                   <label class="label">Select Recipes</label>
@@ -95,6 +107,11 @@ export default {
                 selected: false,
                 title: r.title,
                 id: r.id
+            })),
+            selectedIngredients: this.$store.state.Ingredients.ingredients.map(i => ({
+                selected: false,
+                nameSingular: i.nameSingular,
+                id: i.id
             }))
         };
     },
@@ -111,11 +128,18 @@ export default {
                 {'is-primary': true, 'is-medium': true} :
                 {};
         },
+        getIngredientTagClass(index) {
+            return this.selectedIngredients[index].selected ?
+                {'is-info': true, 'is-medium': true} : {};
+        },
         selectRecipe(index) {
-            this.selectedRecipes[index].selected = ! this.selectedRecipes[index].selected;
+            this.selectedRecipes[index].selected = !this.selectedRecipes[index].selected;
             if(this.selectedRecipes[index].selected) {
                 this.selectedRecipes[index].order = 1;
             }
+        },
+        selectIngredient(index) {
+            this.selectedIngredients[index] = !this.selectedIngredients[index].selected;
         },
         save() {
             //need to get recipe ids
@@ -127,6 +151,7 @@ export default {
                     id: r.id,
                     order: r.order
                 })),
+                ingredients: this.selectedIngredients.filter(i => i.selected).map(i => i.id),
                 title: this.inputTitle,
                 overview: this.inputOverview
             };

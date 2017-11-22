@@ -55,6 +55,17 @@
               <label class="label">Delivery Time</label>
               <delivery-time @update:delivery="updateDelivery" :delivery="deliveryObj"></delivery-time>
               <div class="field">
+                  <label class="label">Select Meal Plan Specific Ingredients</label>
+                  <div class="tags">
+                      <span
+                        class="tag"
+                        v-for="(ingredient, index) in selectedIngredients"
+                        :key="ingredient.id"
+                        v-on:click="selectIngredient(index)"
+                        :class="getIngredientTagClass(index)">{{ingredient.nameSingular}}</span>
+                  </div>
+              </div>
+              <div class="field">
                   <label class="label">Select Recipes</label>
                   <div class="tags">
                       <span
@@ -107,6 +118,11 @@ export default {
                 title: r.title,
                 id: r.id
             })),
+            selectedIngredients: this.$store.state.Ingredients.ingredients.map(i => ({
+                selected: false,
+                nameSingular: i.nameSingular,
+                id: i.id
+            })),
             editSuccess: false,
             isError: false,
             selectedUsername: '',
@@ -122,6 +138,7 @@ export default {
     methods: {
         save() {
             let recipesToRemove = [];
+            let ingredientsToRemove = [];
             let mealPlan = {
                 id: this.selectedMealPlan.id,
                 user: this.selectedMealPlan.user,
@@ -129,9 +146,24 @@ export default {
                 deliveryTimezone: this.selectedMealPlan.deliveryTimezone,
                 title: this.selectedMealPlan.title,
                 overview: this.selectedMealPlan.overview,
-                recipes: []
+                recipes: [],
+                ingredients: []
             };
+            //fill in ingredients
+            this.selectedIngredients.forEach(si => {
+                let ingred = this.selectedMealPlan.ingredients.find(i => i.id === si.id);
+                if(si.selected) {
+                    if(!ingred) {
+                        mealPlan.ingredients.push(si.id);
+                    }
+                } else {
+                    if(ingred) {
+                        ingredientsToRemove.push(ingred.ingredientMealPlanId);
+                    }
+                }
+            })
             //fill in recipes
+            //Is there a need for updating recipeMealPlans, as opposed to just adding or deleting them?
             this.selectedRecipes.forEach(sr => {
                 let recipe = this.selectedMealPlan.recipes.find(recipe => recipe.id === sr.id);
                 if(sr.selected) {
@@ -149,7 +181,8 @@ export default {
             });
             this.$store.dispatch('editMealPlan', {
                 mealPlan,
-                recipesToRemove
+                recipesToRemove,
+                ingredientsToRemove
             }).then((editedMealPlan) => {
                 this.editSuccess = true;
                 this.isError = false;
@@ -186,6 +219,7 @@ export default {
                     this.deliveryObj = null;
                     this.$refs["mealPlanSelect"].value = '';
                     this.selectedRecipes.forEach(r => r.selected = false);
+                    this.selectedIngredients.forEach(i => i.selected = false);
                 });
         },
         updateDelivery(deliveryInfo) {
@@ -198,10 +232,17 @@ export default {
                 this.selectedRecipes[index].order = 1;
             }
         },
+        selectIngredient(index) {
+            this.selectedIngredients[index] = !this.selectedIngredients[index].selected;
+        },
         getRecipeTagClass(index) {
             return this.selectedRecipes[index].selected ?
                 {'is-primary': true, 'is-medium': true} :
                 {};
+        },
+        getIngredientTagClass(index) {
+            return this.selectedIngredients[index].selected ?
+                {'is-info': true, 'is-medium': true} : {};
         },
         selectMealPlan() {
             if(!this.selected) {
@@ -222,6 +263,13 @@ export default {
                     if(index !== -1) {
                         sr.selected = true;
                         sr.order = this.selectedMealPlan.recipes[index].mealPlanOrder;
+                    }
+                });
+                //select ingredients
+                this.selectedIngredients.forEach(si => {
+                    let index = this.selectedMealPlan.ingredients.findIndex(ingred => ingred.id === si.id);
+                    if(index !== -1) {
+                        si.selected = true;
                     }
                 });
             }
