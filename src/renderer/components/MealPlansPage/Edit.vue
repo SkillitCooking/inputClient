@@ -233,7 +233,7 @@ export default {
             }
         },
         selectIngredient(index) {
-            this.selectedIngredients[index] = !this.selectedIngredients[index].selected;
+            this.selectedIngredients[index].selected = !this.selectedIngredients[index].selected;
         },
         getRecipeTagClass(index) {
             return this.selectedRecipes[index].selected ?

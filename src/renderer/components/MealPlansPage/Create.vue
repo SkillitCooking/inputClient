@@ -139,7 +139,7 @@ export default {
             }
         },
         selectIngredient(index) {
-            this.selectedIngredients[index] = !this.selectedIngredients[index].selected;
+            this.selectedIngredients[index].selected = !this.selectedIngredients[index].selected;
         },
         save() {
             //need to get recipe ids
