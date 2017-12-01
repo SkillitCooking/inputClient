@@ -20,6 +20,14 @@
           <button v-on:click="login()" class="button is-primary">Login</button>
         </div>
       </div>
+      <div class="field">
+          <div class="control">
+              <label class="checkbox">
+                  <input type="checkbox" v-model="useDev">
+                  Login in to Development Server
+              </label>
+          </div>
+      </div>
       <p v-if="isError" class="has-text-danger">There was a login error.</p>
     </div>
   </div>
@@ -28,6 +36,7 @@
 <script>
 import {mapActions} from 'vuex'
 import Jumper from 'vue-loading-spinner/src/components/Jumper';
+import axios from 'axios';
 
 export default {
 
@@ -38,7 +47,8 @@ export default {
   data: function() {
       return {
         inputPassword: '',
-        inputUsername: ''
+        inputUsername: '',
+        useDev: false
     };
   },
   //getters for logged in 
@@ -46,6 +56,9 @@ export default {
   //And with modules?
   methods: {
     login() {
+      if(this.useDev) {
+          axios.defaults.baseURL = 'https://skillicookingdevapi.info/api';
+      }
       this.$store.dispatch('login', {username: this.inputUsername, password: this.inputPassword})
         .then(() => {
           this.inputUsername = '';
