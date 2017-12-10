@@ -150,7 +150,7 @@ export default {
               isComposite: this.inputIsComposite,
               units: this.selectedUnit.id,
               category: this.selectedCategory.id,
-              tags: this.selectedTags.filter(t => t).map((t, index) => this.tags[index].id)
+              tags: this.selectedTags.filter(t => t.selected).map((t) => t.id)
           };
           if(ingredient.isComposite) {
               ingredient.composingIngredients = this.selectedIngredients
